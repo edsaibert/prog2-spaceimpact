@@ -13,8 +13,8 @@ ALLEGRO_LIBS := allegro-5 \
 CC := gcc 
 
 PKG_CONFIG := /usr/bin/pkg-config
-CFLAGS := -g -Wall -MMD -Iinclude `$(PKG_CONFIG) --cflags $(ALLEGRO_LIBS)`
-LIBS := `$(PKG_CONFIG) --libs $(ALLEGRO_LIBS)`
+CFLAGS := -g -Wall -MMD -Iinclude `$(PKG_CONFIG) --cflags $(ALLEGRO_LIBS)` 
+LIBS := `$(PKG_CONFIG) --libs $(ALLEGRO_LIBS)` -lm
 
 SOURCE_FILES := $(wildcard src/*.c)
 OBJECT_FILES := $(patsubst src/%, obj/%, $(SOURCE_FILES:.c=.o))
@@ -26,7 +26,7 @@ $(EXECUTABLE_NAME): $(OBJECT_FILES)
 
 obj/%.o: src/%.c
 	@mkdir -p obj
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $< 
 
 all: $(EXECUTABLE_NAME)
 

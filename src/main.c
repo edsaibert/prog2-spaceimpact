@@ -1,6 +1,8 @@
 #include "../main.h"
-#include "Spaceship.h";
-#include "Joystick.h";
+#include "Spaceship.h"
+#include "Joystick.h"
+#include "Screen.h"
+#include "Position.h"
 
 int main(void){
     al_init();
@@ -11,7 +13,10 @@ int main(void){
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 30.0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
 
-    ALLEGRO_DISPLAY* disp = al_create_display(500, 300);
+	SCREEN* sc = createScreen(500, 300);
+	if (!sc) return 1;
+
+    ALLEGRO_DISPLAY* disp = al_create_display(sc->max_x, sc->max_y);
 
     al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
     ALLEGRO_FONT* font = al_create_builtin_font();
@@ -26,16 +31,15 @@ int main(void){
 	SPACESHIP* sp = createSpaceship(20, 20);
 	if (!sp) return 1;
 
-	JOYSTICK* jt = createJoystick();
-
     while(1){
-        al_wait_for_event(queue, &event);
+        al_wait_for_event(queue, &e);
 
 		// Caso o evento seja de relógio
 		if (e.type == 30){
-			updateSpaceshipPos(sp, 2, 1);
+			updateSpaceshipPosition(sp, sc, moveSpaceship);	
 			al_clear_to_color(al_map_rgb(255, 255, 255));
 			drawSpaceship(sp);
+			al_flip_display();
 		}
 		// Verifica eventos do teclado
 		else if ((e.type == 10) || (e.type == 12)){
@@ -46,13 +50,11 @@ int main(void){
 			// Tecla 'W'
 			else if (e.keyboard.keycode == 23) updateJoystickUp(sp->control);
 			// Tecla 'S'
-			else if (e.keyboard.keycode == 19) updateJoystickUp(sp->control);
+			else if (e.keyboard.keycode == 19) updateJoystickDown(sp->control);
 		}
-		
-
-		al_flip_display();
-		
     }
+
+	destroyScreen(sc);
 
     al_destroy_font(font);
     al_destroy_display(disp);

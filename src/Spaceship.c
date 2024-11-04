@@ -15,11 +15,34 @@ SPACESHIP* createSpaceship(int x, int y){
 	return sp;
 }
 
-void updateSpaceshipPos(SPACESHIP* sp, int stepCount, unsigned char trajectory){
-	sp->x += stepCount*SPACESHIP_STEP;
-	printf("%d\n", sp->x);
+// Movimenta a nave (SPACESHIP* sp) até o limite da tela (SCREEN* sc)
+void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREEN* sc){
+	if (!trajectory){
+		if (sp->x - stepCount*SPACESHIP_STEP - sp->side/2 >= 0)
+			// Movimentação para a esquerda
+			sp->x = sp->x - stepCount*SPACESHIP_STEP;
+		else sp->x = sp->side/2;
+	}
+	else if (trajectory == 1) {
+		if (sp->x + stepCount*SPACESHIP_STEP + sp->side/2 <= sc->max_x)
+			// Movimentação para a direita
+			sp->x = sp->x + stepCount*SPACESHIP_STEP;
+		else sp->x = sc->max_x - sp->side/2;
+	}
+	else if (trajectory == 2) {
+		if (sp->y - stepCount*SPACESHIP_STEP - sp->side/2 >= 0)
+			// Movimentação para cima
+			sp->y = sp->y - stepCount*SPACESHIP_STEP;
+		else sp->y = sp->side/2;
+	}
+	else if (trajectory == 3) {
+		if (sp->y + stepCount*SPACESHIP_STEP + sp->side/2 <= sc->max_y)
+			// Movimentação para baixo
+			sp->y = sp->y + stepCount*SPACESHIP_STEP;
+		else sp->y = sc->max_y - sp->side/2;
+	}
 }
 
 void drawSpaceship(SPACESHIP* sp){
-	al_draw_filled_rectangle(sp->x-sp->side, sp->y-sp->side, sp->x+sp->side, sp->y+sp->side, al_map_rgb(255,0,0));
+	al_draw_filled_rectangle(sp->x-sp->side/2, sp->y-sp->side/2, sp->x+sp->side/2, sp->y+sp->side/2, al_map_rgb(255,0,0));
 }

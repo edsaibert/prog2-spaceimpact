@@ -7,11 +7,6 @@
 #include <allegro5/allegro_color.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct pos POS;
-struct pos{
-	int x;
-	int y;
-};
+#include <math.h>
 
 #endif
