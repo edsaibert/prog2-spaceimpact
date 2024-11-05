@@ -1,6 +1,6 @@
 #include "Spaceship.h"
 
-SPACESHIP* createSpaceship(int x, int y, const char* spriteFolderPath){
+SPACESHIP* createSpaceship(int x, int y, int enemy, const char* spriteFolderPath){
 	SPACESHIP* sp;
 
 	sp = (SPACESHIP*) malloc(sizeof(SPACESHIP));
@@ -9,6 +9,7 @@ SPACESHIP* createSpaceship(int x, int y, const char* spriteFolderPath){
 
 	sp->x = x;
 	sp->y = y;
+	sp->enemy = enemy;
 	sp->side = SPACESHIP_SIDE; // default para 10
 	sp->control = createJoystick();
 	sp->sprite = createSprite(spriteFolderPath);
@@ -52,14 +53,22 @@ void drawSpaceship(SPACESHIP* sp){
 	int bitmap_width = al_get_bitmap_width(sp->sprite->active);
 	int bitmap_height = al_get_bitmap_height(sp->sprite->active);
 
-	al_draw_scaled_bitmap(
+	if (!(sp->enemy))
+		al_draw_scaled_bitmap(
 			sp->sprite->active,
 			0,0,
 			bitmap_width, bitmap_height,  
 			sp->x-sp->side/2, sp->y-sp->side/2,                         
 			sp->side, sp->side,
 			0                           
+		);
+	else 
+		al_draw_scaled_bitmap(
+			sp->sprite->active,
+			0,0,
+			bitmap_width, bitmap_height,
+			sp->x-sp->side/2, sp->y-sp->side/2,
+			sp->side, sp->side,
+			ALLEGRO_FLIP_HORIZONTAL | ALLEGRO_FLIP_VERTICAL				
 	);
-	//al_draw_bitmap(sp->sprite->active, sp->x-sp->side/2, sp->y-sp->side/2, 0);
-	//al_draw_filled_rectangle(sp->x-sp->side/2, sp->y-sp->side/2, sp->x+sp->side/2, sp->y+sp->side/2, al_map_rgb(255,0,0));
 }

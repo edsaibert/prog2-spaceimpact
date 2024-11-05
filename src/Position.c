@@ -46,7 +46,7 @@ void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (
 		d = normalizedDistance(sp->x, sp->y, enemy->x, enemy->y);	
 	}
 
-	float epsilon = (float) 1/(SPACESHIP_SIDE + SPACESHIP_STEP);
+	float epsilon = (float) 1/(SPACESHIP_STEP + SPACESHIP_SIDE);
 
 	/*
 		Um desvio no eixo x

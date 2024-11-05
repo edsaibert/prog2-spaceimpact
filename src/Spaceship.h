@@ -13,12 +13,13 @@ typedef struct spaceship SPACESHIP;
 struct spaceship {
 	int x;
 	int y;
+	int enemy;
 	unsigned char side;
 	JOYSTICK* control;
 	SPRITE* sprite;
 };
 
-SPACESHIP* createSpaceship(int x, int y, const char* spriteFolderPath);
+SPACESHIP* createSpaceship(int x, int y, int enemy, const char* spriteFolderPath);
 void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREEN* screen);
 void drawSpaceship(SPACESHIP* sp);
 void destroySpaceship(SPACESHIP* sp);

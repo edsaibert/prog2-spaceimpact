@@ -31,10 +31,10 @@ int main(void){
 
 	const char* sprite = "./sprites/spaceships/player/ship_1/";
 
-	SPACESHIP* sp = createSpaceship(20, 20, sprite);
+	SPACESHIP* sp = createSpaceship(20, 20, 0, sprite);
 	if (!sp) return 1;
 
-	SPACESHIP* enemy = createSpaceship(100, 50, sprite);
+	SPACESHIP* enemy = createSpaceship(100, 50, 1, sprite);
 
     while(1){
         al_wait_for_event(queue, &e);
