@@ -9,6 +9,7 @@ int main(void){
     al_install_keyboard();
 
 	al_init_primitives_addon();
+	al_init_image_addon();
 
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 30.0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
@@ -28,10 +29,12 @@ int main(void){
     al_start_timer(timer);
     ALLEGRO_EVENT e;
 
-	SPACESHIP* sp = createSpaceship(20, 20);
+	const char* sprite = "./sprites/spaceships/player/ship_1/";
+
+	SPACESHIP* sp = createSpaceship(20, 20, sprite);
 	if (!sp) return 1;
 
-	SPACESHIP* enemy = createSpaceship(100,50);
+	SPACESHIP* enemy = createSpaceship(100, 50, sprite);
 
     while(1){
         al_wait_for_event(queue, &e);
