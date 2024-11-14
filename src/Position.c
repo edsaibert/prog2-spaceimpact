@@ -27,6 +27,15 @@ float* normalizedDistance(int x1, int y1, int x2, int y2){
 	}
 	
 	return d;
+
+	/*
+	   Um desvio no eixo x
+	   - positivo: o inimigo está a direita
+	   - negativo: o inimigo está a esquerda
+	   Um desvio no eixo y
+	   - positivo: o inimigo está para baixo
+	   - negativo: o inimigo está para cima 
+	 */	
 }
 
 // Checa a colisão entre objetos utilizando a função da circunferência e distância euclidiana
@@ -48,29 +57,22 @@ void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (
 
 	float epsilon = (float) 1/(SPACESHIP_STEP + SPACESHIP_SIDE);
 
-	/*
-		Um desvio no eixo x
-			- positivo: o inimigo está a direita
-			- negativo: o inimigo está a esquerda
-		Um desvio no eixo y
-			- positivo: o inimigo está para baixo
-			- negativo: o inimigo está para cima 
-	*/	
+
 
 	if (sp->control->left){
-		if (d[0] > -epsilon)
+		//if (d[0] > -epsilon)
 			positionFunction(sp, 1, 0, sc);
 	}
 	if (sp->control->right){
-		if (d[0] < epsilon)
+		//if (d[0] < epsilon)
 			positionFunction(sp, 1, 1, sc);
 	}
 	if (sp->control->up){
-		if (d[1] > -epsilon)
+		//if (d[1] > -epsilon)
 			positionFunction(sp, 1, 2, sc);
 	}
 	if (sp->control->down){
-		if (d[1] < epsilon)
+		//if (d[1] < epsilon)
 			positionFunction(sp, 1, 3, sc);
 	}
 }

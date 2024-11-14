@@ -8,6 +8,8 @@ int main(void){
     al_init();
     al_install_keyboard();
 
+	srand(time(NULL));
+
 	al_init_primitives_addon();
 	al_init_image_addon();
 
@@ -42,6 +44,7 @@ int main(void){
 		// Caso o evento seja de relógio
 		if (e.type == 30){
 			updateSpaceshipPosition(sp, enemy, sc, moveSpaceship);	
+			printf("colisao: %d", checkCollision(sp->x, sp->y, enemy->x, enemy->y, sp->side, enemy->side));
 			al_clear_to_color(al_map_rgb(255, 255, 255));
 			drawSpaceship(sp);
 			drawSpaceship(enemy);
