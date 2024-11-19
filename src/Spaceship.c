@@ -50,6 +50,7 @@ void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREE
 }
 
 void drawSpaceship(SPACESHIP* sp){
+
 	int bitmap_width = al_get_bitmap_width(sp->sprite->active);
 	int bitmap_height = al_get_bitmap_height(sp->sprite->active);
 
@@ -71,4 +72,10 @@ void drawSpaceship(SPACESHIP* sp){
 			sp->side, sp->side,
 			ALLEGRO_FLIP_HORIZONTAL | ALLEGRO_FLIP_VERTICAL				
 	);
+}
+
+void destroySpaceship(SPACESHIP* sp){
+	destroyJoystick(sp->control);
+	destroySprite(sp->sprite);
+	free(sp);	
 }

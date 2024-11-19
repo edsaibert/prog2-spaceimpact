@@ -23,4 +23,6 @@ void updateJoystickUp(JOYSTICK* jt);		// muda o estado de jt->up
 
 void updateJoystickDown(JOYSTICK* jt);		// muda o estado de jt->down
 
+void destroyJoystick(JOYSTICK* jt);
+
 #endif

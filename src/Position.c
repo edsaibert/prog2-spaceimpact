@@ -55,24 +55,29 @@ void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (
 		d = normalizedDistance(sp->x, sp->y, enemy->x, enemy->y);	
 	}
 
-	float epsilon = (float) 1/(SPACESHIP_STEP + SPACESHIP_SIDE);
+	//float epsilon = (float) 1/(SPACESHIP_STEP + SPACESHIP_SIDE);
+	float epsilon = (float) 1/SPACESHIP_SIDE;
+	//float epsilon = 0.1;
 
+	if (d){
+		if (sp->control->left && d[0] > -epsilon){
+			positionFunction(sp, -1, 0, sc);
+		}
+		if (sp->control->right && d[0] < epsilon){
+			positionFunction(sp, -1, 1, sc);
+		}
+		if (sp->control->up && d[1] > -epsilon){
+			positionFunction(sp, -1, 2, sc);
+		}
+		if (sp->control->down && d[1] < epsilon){
+			positionFunction(sp, -1, 3, sc);
+		}
+	}
+	else {
+		if (sp->control->left) positionFunction(sp, 1, 0, sc);
+		if (sp->control->right) positionFunction(sp, 1, 1, sc);
+		if (sp->control->up) positionFunction(sp, 1, 2, sc);
+		if (sp->control->down) positionFunction(sp, 1, 3, sc);
+	}
 
-
-	if (sp->control->left){
-		//if (d[0] > -epsilon)
-			positionFunction(sp, 1, 0, sc);
-	}
-	if (sp->control->right){
-		//if (d[0] < epsilon)
-			positionFunction(sp, 1, 1, sc);
-	}
-	if (sp->control->up){
-		//if (d[1] > -epsilon)
-			positionFunction(sp, 1, 2, sc);
-	}
-	if (sp->control->down){
-		//if (d[1] < epsilon)
-			positionFunction(sp, 1, 3, sc);
-	}
 }

@@ -3,6 +3,7 @@
 #include "Joystick.h"
 #include "Screen.h"
 #include "Position.h"
+#include "Enemy.h"
 
 int main(void){
     al_init();
@@ -37,17 +38,23 @@ int main(void){
 	if (!sp) return 1;
 
 	SPACESHIP* enemy = createSpaceship(100, 50, 1, sprite);
+	SPACESHIP* collision;
+	ENEMIES* enemies = createEnemyList(sc);
 
     while(1){
         al_wait_for_event(queue, &e);
 
 		// Caso o evento seja de relógio
 		if (e.type == 30){
-			updateSpaceshipPosition(sp, enemy, sc, moveSpaceship);	
-			printf("colisao: %d", checkCollision(sp->x, sp->y, enemy->x, enemy->y, sp->side, enemy->side));
+			collision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);			
+			if (collision) printf("collision with enemy\n");
+			
+			//printf("colisao: %d", checkCollision(sp->x, sp->y, enemy->x, enemy->y, sp->side, enemy->side));
+			updateSpaceshipPosition(sp, collision, sc, moveSpaceship);	
 			al_clear_to_color(al_map_rgb(255, 255, 255));
 			drawSpaceship(sp);
 			drawSpaceship(enemy);
+			drawEnemies(enemies);
 			al_flip_display();
 		}
 		// Verifica eventos do teclado

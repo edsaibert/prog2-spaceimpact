@@ -27,3 +27,7 @@ void updateJoystickUp(JOYSTICK* jt){
 void updateJoystickDown(JOYSTICK* jt){
 	jt->down = jt->down ^ 1;
 }
+
+void destroyJoystick(JOYSTICK* jt){
+	free(jt);
+}
