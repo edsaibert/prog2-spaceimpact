@@ -5,8 +5,9 @@
 #include "Joystick.h"
 #include "Screen.h"
 #include "Sprite.h"
+#include "Gun.h"
 
-#define SPACESHIP_STEP 15 
+#define SPACESHIP_STEP 10 
 #define SPACESHIP_SIDE 50 
 
 typedef struct spaceship SPACESHIP;
@@ -16,6 +17,7 @@ struct spaceship {
 	int enemy;
 	unsigned char side;
 	JOYSTICK* control;
+	GUN* gun;
 	SPRITE* sprite;
 };
 

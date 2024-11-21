@@ -37,7 +37,6 @@ int main(void){
 	SPACESHIP* sp = createSpaceship(20, 20, 0, sprite);
 	if (!sp) return 1;
 
-	SPACESHIP* enemy = createSpaceship(100, 50, 1, sprite);
 	SPACESHIP* collision;
 	ENEMIES* enemies = createEnemyList(sc);
 
@@ -46,14 +45,13 @@ int main(void){
 
 		// Caso o evento seja de relógio
 		if (e.type == 30){
+			// Verifica colisão com inimigos e atualiza a posição dos inimigos
 			collision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);			
-			if (collision) printf("collision with enemy\n");
-			
-			//printf("colisao: %d", checkCollision(sp->x, sp->y, enemy->x, enemy->y, sp->side, enemy->side));
 			updateSpaceshipPosition(sp, collision, sc, moveSpaceship);	
+			updateScreenForEnemies(enemies, sc);
+
 			al_clear_to_color(al_map_rgb(255, 255, 255));
 			drawSpaceship(sp);
-			drawSpaceship(enemy);
 			drawEnemies(enemies);
 			al_flip_display();
 		}

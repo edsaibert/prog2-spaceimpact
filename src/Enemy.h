@@ -15,8 +15,17 @@ typedef struct enemies {
 ENEMIES* createEnemyList(SCREEN* sc);
 // Checa se existe uma colisão entre as coordenadas dadas e algum inimigo e caso tenha, retorna o inimigo com o qual o as coordenadas colidiram
 SPACESHIP* checkCollisionFromEnemies(ENEMIES* enemies, int x, int y, int side);
+
+ENEMIES* createEnemyNode(SPACESHIP* enemy);
+
+void insertIntoEnemyList(ENEMIES** head, SPACESHIP* enemy);
+
 // Atualiza a lista de inimigos caso uma bala tenha tido colisão com um inimigo
 void hitEnemy(ENEMIES* enemies, SPACESHIP* enemy);
+
+void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy);
+
+void updateScreenForEnemies(ENEMIES* head, SCREEN* sc);
 
 void drawEnemies(ENEMIES* enemies);
 

@@ -49,6 +49,7 @@ void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREE
 	}
 }
 
+/*
 void drawSpaceship(SPACESHIP* sp){
 
 	int bitmap_width = al_get_bitmap_width(sp->sprite->active);
@@ -61,8 +62,8 @@ void drawSpaceship(SPACESHIP* sp){
 			bitmap_width, bitmap_height,  
 			sp->x-sp->side/2, sp->y-sp->side/2,                         
 			sp->side, sp->side,
-			0                           
-		);
+			0
+			);
 	else 
 		al_draw_scaled_bitmap(
 			sp->sprite->active,
@@ -72,6 +73,36 @@ void drawSpaceship(SPACESHIP* sp){
 			sp->side, sp->side,
 			ALLEGRO_FLIP_HORIZONTAL | ALLEGRO_FLIP_VERTICAL				
 	);
+}
+*/
+
+void drawSpaceship(SPACESHIP* sp) {
+    if (!sp || !sp->sprite || !sp->sprite->active) return;
+
+    float cx = sp->side / 2.0f;     float cy = sp->side / 2.0f;
+
+    float angleEnemy = 3.0f * ALLEGRO_PI / 2.0f; // 270 
+	float angle = ALLEGRO_PI / 2.0f; // 90
+
+	if (sp->enemy){
+		al_draw_rotated_bitmap(
+				sp->sprite->active,  
+				cx, cy,             
+				sp->x, sp->y,      
+				angleEnemy,            
+				0                
+    	);
+
+	}
+    else {
+		al_draw_rotated_bitmap(
+				sp->sprite->active,  
+				cx, cy,             
+				sp->x, sp->y,      
+				angle,            
+				0                
+    	);
+	}
 }
 
 void destroySpaceship(SPACESHIP* sp){

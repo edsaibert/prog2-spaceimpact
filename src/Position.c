@@ -17,8 +17,9 @@ float* normalizedDistance(int x1, int y1, int x2, int y2){
 	float squaredDistance = (float) (distance_x * distance_x + distance_y * distance_y);
 
 	if (squaredDistance != 0){
-		d[0] = distance_x / squaredDistance;
-		d[1] = distance_y / squaredDistance;
+		float magnitude = sqrtf(squaredDistance);	
+		d[0] = distance_x / magnitude;
+		d[1] = distance_y / magnitude;
 		printf("d[0]: %f, d[1]: %f\n", d[0], d[1]);
 	}
 	else {
@@ -51,33 +52,26 @@ short int checkCollision(int x1, int y1, int x2, int y2, int side1, int side2){
 void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction) (SPACESHIP*, int, unsigned char, SCREEN*)){
 	float* d = NULL;
 
+	/*
+		Caso tenha tido colisao com um inimigo = enemy != NULL
+	*/
 	if (enemy){
 		d = normalizedDistance(sp->x, sp->y, enemy->x, enemy->y);	
 	}
 
-	//float epsilon = (float) 1/(SPACESHIP_STEP + SPACESHIP_SIDE);
-	float epsilon = (float) 1/SPACESHIP_SIDE;
-	//float epsilon = 0.1;
+	float epsilon = (float) 1/(SPACESHIP_SIDE + SPACESHIP_STEP);
 
-	if (d){
-		if (sp->control->left && d[0] > -epsilon){
-			positionFunction(sp, -1, 0, sc);
-		}
-		if (sp->control->right && d[0] < epsilon){
-			positionFunction(sp, -1, 1, sc);
-		}
-		if (sp->control->up && d[1] > -epsilon){
-			positionFunction(sp, -1, 2, sc);
-		}
-		if (sp->control->down && d[1] < epsilon){
-			positionFunction(sp, -1, 3, sc);
-		}
+	if (sp->control->left && (!d || d[0] > -epsilon)){
+		positionFunction(sp, 1, 0, sc);
 	}
-	else {
-		if (sp->control->left) positionFunction(sp, 1, 0, sc);
-		if (sp->control->right) positionFunction(sp, 1, 1, sc);
-		if (sp->control->up) positionFunction(sp, 1, 2, sc);
-		if (sp->control->down) positionFunction(sp, 1, 3, sc);
+	if (sp->control->right && (!d || d[0] < epsilon)){
+		positionFunction(sp, 1, 1, sc);
+	}
+	if (sp->control->up && (!d || d[1] > -epsilon)){
+		positionFunction(sp, 1, 2, sc);
+	}
+	if (sp->control->down && (!d || d[1] < epsilon)){
+		positionFunction(sp, 1, 3, sc);
 	}
 
 }

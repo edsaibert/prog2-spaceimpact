@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-ENEMIES* createNode(SPACESHIP* enemy){
+ENEMIES* createEnemyNode(SPACESHIP* enemy){
 	ENEMIES* node = (ENEMIES*) malloc(sizeof(ENEMIES));
 	node->closerEnemy = enemy;
 	node->next = NULL;
@@ -9,8 +9,8 @@ ENEMIES* createNode(SPACESHIP* enemy){
 	return node;
 }
 
-void insertIntoList(ENEMIES** head, SPACESHIP* enemy){
-	ENEMIES* node = createNode(enemy);
+void insertIntoEnemyList(ENEMIES** head, SPACESHIP* enemy){
+	ENEMIES* node = createEnemyNode(enemy);
 
 	if (*head == NULL)
 		*head = node;
@@ -20,6 +20,40 @@ void insertIntoList(ENEMIES** head, SPACESHIP* enemy){
 			temp = temp->next;
 		}
 		temp->next = node;
+	}	
+}
+
+void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy){
+	if (!head || !*head || !enemy) return;
+
+	ENEMIES* current = *head;
+	ENEMIES* prev = NULL;
+
+	while (current != NULL) {
+		if (current->closerEnemy == enemy) {
+			if (prev == NULL) {
+				*head = current->next;
+			} else {
+				prev->next = current->next;
+			}
+
+			destroySpaceship(current->closerEnemy);
+			free(current);
+			return;
+		}
+		
+		prev = current;
+		current = current->next;
+	}
+
+}
+
+void updateScreenForEnemies(ENEMIES* head, SCREEN* sc){
+	ENEMIES* temp = head;
+	
+	while (temp->next != NULL){
+		moveSpaceship(temp->closerEnemy, 1, 0, sc);		
+		temp = temp->next;
 	}	
 }
 
@@ -33,7 +67,7 @@ ENEMIES* createEnemyList(SCREEN* sc){
 		SPACESHIP* enemy = createSpaceship(randomX, randomY, 1, "./sprites/spaceships/player/ship_1/");
 		if (!enemy) {return NULL;};
 		
-		insertIntoList(&head, enemy);
+		insertIntoEnemyList(&head, enemy);
 	}
 
 	return head;
