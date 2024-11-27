@@ -36,7 +36,7 @@ int main(void){
 	SPACESHIP* sp = createSpaceship(20, 20, 0, sprite);
 	if (!sp) return 1;
 
-	SPACESHIP* collision;
+	SPACESHIP* enemyCollision;
 	ENEMIES* enemies = createEnemyList(sc);
 
     while(1){
@@ -44,14 +44,25 @@ int main(void){
 
 		// Caso o evento seja de relógio
 		if (e.type == 30){
+			addEnemy(&enemies, sc);
+			
 			// Verifica colisão com inimigos e atualiza a posição dos inimigos
-			collision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);			
-			updateSpaceshipPosition(sp, collision, sc, moveSpaceship);	
-			updateScreenForEnemies(&enemies, sc);
+			enemyCollision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);			
+			hitPlayer(&enemies, sp);
+			//bulletCollisionFromEnemies
+			//bulletColisionFromSpaceship
+
+			updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship);	
+			updateScreenForEnemies(&enemies, sp, sc);
+
+			enemiesShoot(enemies, sc);
+			//collision = checkCollisionFromBullets(enemyBullets, sp->x, sp->y, sp->side);
 
 			al_clear_to_color(al_map_rgb(255, 255, 255));
 			drawSpaceship(sp);
 			drawEnemies(enemies);
+			drawEnemyBullets(enemies);
+
 			al_flip_display();
 		}
 		// Verifica eventos do teclado

@@ -1,3 +1,6 @@
+#ifndef GUN_H
+#define GUN_H
+
 #include "../main.h"
 
 #include "Bullet.h"
@@ -14,3 +17,5 @@ GUN* createGun();
 BULLET* shotGun(int x, int y, unsigned char trajectory, GUN* gun);
 
 void destroyGun(GUN* gun);
+
+#endif

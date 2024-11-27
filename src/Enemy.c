@@ -5,7 +5,6 @@ ENEMIES* createEnemyNode(SPACESHIP* enemy){
 	node->closerEnemy = enemy;
 	node->next = NULL;
 
-
 	return node;
 }
 
@@ -49,47 +48,64 @@ void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy){
 
 }
 
-void moveEnemySpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREEN* sc){
-	if (!trajectory){
-		sp->sprite->active = sp->sprite->front;
-		if (sp->x - stepCount*SPACESHIP_STEP - sp->side/2 >= -sp->side)
-			// Movimentação para a esquerda
-			sp->x = sp->x - stepCount*SPACESHIP_STEP;
-		else sp->x = -sp->side;
+void enemiesShoot(ENEMIES* head, SCREEN* sc){
+	if (!head) return;
+
+	ENEMIES* temp = head;
+	while (temp->next != NULL){
+		if (rand() % 100 < 50){
+			shotGun(temp->closerEnemy->x, temp->closerEnemy->y, 1, temp->closerEnemy->gun);
+		}
+		temp = temp->next;
 	}
-	else if (trajectory == 1) {
-		sp->sprite->active = sp->sprite->front;	
-		if (sp->x + stepCount*SPACESHIP_STEP + sp->side/2 <= sc->max_x)
-			// Movimentação para a direita
-			sp->x = sp->x + stepCount*SPACESHIP_STEP;
-		else sp->x = sc->max_x - sp->side/2;
-	}
-	else if (trajectory == 2) {
-		sp->sprite->active = sp->sprite->left;
-		if (sp->y - stepCount*SPACESHIP_STEP - sp->side/2 >= 0)
-			// Movimentação para cima
-			sp->y = sp->y - stepCount*SPACESHIP_STEP;
-		else sp->y = sp->side/2;
-	}
-	else if (trajectory == 3) {
-		sp->sprite->active = sp->sprite->right;
-		if (sp->y + stepCount*SPACESHIP_STEP + sp->side/2 <= sc->max_y)
-			// Movimentação para baixo
-			sp->y = sp->y + stepCount*SPACESHIP_STEP;
-		else sp->y = sc->max_y - sp->side/2;
+
+}
+
+void drawEnemyBullets(ENEMIES* head){
+	if (!head) return;
+
+	ENEMIES* temp = head;
+	while (temp->next != NULL){
+		drawBullet(temp->closerEnemy->gun->shots);
+		temp = temp->next;
 	}
 }
 
-void updateScreenForEnemies(ENEMIES** head, SCREEN* sc) {                                            
+void hitPlayer(ENEMIES** enemies, SPACESHIP* sp){
+	if (!enemies || !*enemies) return;
+	int damage = 0;
+
+	ENEMIES* temp = *enemies;
+	while (temp->next != NULL){
+		damage = checkCollisionFromBullet(&(temp->closerEnemy->gun->shots), sp->x, sp->y, sp->side);
+		hitSpaceship(sp, damage);
+		temp = temp->next;
+	}
+}
+
+
+void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {                                            
     ENEMIES* temp = *head;
     if (*head == NULL) return;
 
     while (temp != NULL) {
         ENEMIES* nextTemp = temp->next;
 
-        moveEnemySpaceship(temp->closerEnemy, 1, 0, sc);
+		updateScreenForBullet(&(temp->closerEnemy->gun->shots), sc);
 
-        if (temp->closerEnemy->x == -temp->closerEnemy->side) {
+		if (!(sp->x + sp->side / 2 == temp->closerEnemy->x - temp->closerEnemy->side / 2 &&
+			  sp->y + sp->side / 2 >= temp->closerEnemy->y - temp->closerEnemy->side / 2 &&
+			  sp->y - sp->side / 2 <= temp->closerEnemy->y + temp->closerEnemy->side / 2))
+		{
+			temp->closerEnemy->sprite->active = temp->closerEnemy->sprite->front;
+
+			if (temp->closerEnemy->x - SPACESHIP_STEP >= -temp->closerEnemy->side)
+				temp->closerEnemy->x -= SPACESHIP_STEP;
+			else
+				temp->closerEnemy->x = -temp->closerEnemy->side;
+		}
+
+		if (temp->closerEnemy->x == -temp->closerEnemy->side) {
 			printf("Removendo inimigo\n");
             removeFromEnemyList(head, temp->closerEnemy);
             temp = *head;  
@@ -103,17 +119,31 @@ void updateScreenForEnemies(ENEMIES** head, SCREEN* sc) {
 ENEMIES* createEnemyList(SCREEN* sc){
 	ENEMIES* head = NULL;
 
-	for (int i = 0; i < NUMBER_OF_ENEMIES; i++){
-		int randomX = rand() % (sc->max_x + 1);
-		int randomY = rand() % (sc->max_y + 1);
+	// for (int i = 0; i < NUMBER_OF_ENEMIES; i++){
+	// 	int randomX = rand() % (sc->max_x + 1);
+	// 	int randomY = rand() % (sc->max_y + 1);
 
-		SPACESHIP* enemy = createSpaceship(randomX, randomY, 1, "./sprites/spaceships/player/ship_1/");
-		if (!enemy) {return NULL;};
+	// 	SPACESHIP* enemy = createSpaceship(randomX, randomY, 1, "./sprites/spaceships/player/ship_1/");
+	// 	if (!enemy) {return NULL;};
 		
-		insertIntoEnemyList(&head, enemy);
-	}
+	// 	insertIntoEnemyList(&head, enemy);
+	// }
 
 	return head;
+}
+
+//adicionar enemy type
+void addEnemy(ENEMIES** head, SCREEN* sc){
+	int randomY = rand() % (sc->max_y + 1);
+
+	SPACESHIP *enemy;
+
+	if (rand() % 150 == 0){
+		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, "./sprites/spaceships/player/ship_1/");
+		if (!enemy) {return;};
+		
+		insertIntoEnemyList(head, enemy);
+	}
 }
 
 void drawEnemies(ENEMIES* head){

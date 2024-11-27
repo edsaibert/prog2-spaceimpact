@@ -77,6 +77,24 @@ void drawSpaceship(SPACESHIP* sp){
 }
 */
 
+void hitSpaceship(SPACESHIP* sp, int damage){
+	if (!sp) return;
+
+	sp->health -= damage;
+	printf("Spaceship health: %d\n", sp->health);
+
+	if (sp->health <= 0){
+		sp->health = 0;
+	}
+}
+
+int checkIfSpaceshipIsDead(SPACESHIP* sp){
+	if (!sp) return 1;
+
+	if (sp->health == 0) return 1;
+	return 0;
+}
+
 void drawSpaceship(SPACESHIP* sp) {
     if (!sp) return;
 

@@ -1,5 +1,6 @@
 #include "Position.h"
 
+#define EPSILON ( (float) 1/(SPACESHIP_SIDE + SPACESHIP_STEP))
 
 float* normalizedDistance(int x1, int y1, int x2, int y2){
 	/*
@@ -59,19 +60,18 @@ void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (
 		d = normalizedDistance(sp->x, sp->y, enemy->x, enemy->y);	
 	}
 
-	float epsilon = (float) 1/(SPACESHIP_SIDE + SPACESHIP_STEP);
-
-	if (sp->control->left && (!d || d[0] > -epsilon)){
+	if (sp->control->left && (!d || d[0] > -EPSILON)){
 		positionFunction(sp, 10, 0, sc);
 	}
-	if (sp->control->right && (!d || d[0] < epsilon)){
+	if (sp->control->right && (!d || d[0] < EPSILON)){
 		positionFunction(sp, 10, 1, sc);
 	}
-	if (sp->control->up && (!d || d[1] > -epsilon)){
+	if (sp->control->up && (!d || d[1] > -EPSILON)){
 		positionFunction(sp, 10, 2, sc);
 	}
-	if (sp->control->down && (!d || d[1] < epsilon)){
+	if (sp->control->down && (!d || d[1] < EPSILON)){
 		positionFunction(sp, 10, 3, sc);
 	}
 
 }
+
