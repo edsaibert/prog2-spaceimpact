@@ -21,7 +21,8 @@ BULLET* shotGun (int x, int y, unsigned char trajectory, GUN* gun) {
 void destroyGun(GUN* gun){
 	if (!gun) return;
 
-	destroyBulletList(gun->shots);
+	if (gun->shots)
+		destroyBulletList(gun->shots);
 	free(gun);
 }
 

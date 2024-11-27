@@ -29,7 +29,7 @@ void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy){
 	ENEMIES* current = *head;
 	ENEMIES* prev = NULL;
 
-	while (current != NULL) {
+	while (current != NULL){ 
 		if (current->closerEnemy == enemy) {
 			if (prev == NULL) {
 				*head = current->next;
@@ -44,17 +44,29 @@ void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy){
 		
 		prev = current;
 		current = current->next;
+
 	}
 
 }
 
-void updateScreenForEnemies(ENEMIES* head, SCREEN* sc){
+void updateScreenForEnemies(ENEMIES* head, SCREEN* sc) {                                            
 	ENEMIES* temp = head;
-	
-	while (temp->next != NULL){
-		moveSpaceship(temp->closerEnemy, 1, 0, sc);		
-		temp = temp->next;
-	}	
+    ENEMIES* nextTemp = NULL;
+
+	if (head == NULL) return;
+
+    while (temp != NULL) {
+		nextTemp = temp->next;
+
+        moveSpaceship(temp->closerEnemy, 1, 0, sc);                                    
+		printf("mem: %p\n", temp->closerEnemy);
+
+        if (temp->closerEnemy->x == temp->closerEnemy->side / 2) {
+			removeFromEnemyList(&head, temp->closerEnemy);
+        }
+        
+        temp = nextTemp;
+    }   
 }
 
 ENEMIES* createEnemyList(SCREEN* sc){
@@ -74,6 +86,8 @@ ENEMIES* createEnemyList(SCREEN* sc){
 }
 
 void drawEnemies(ENEMIES* head){
+	if (!head) return;
+
 	ENEMIES* temp = head;
 	while (temp->next != NULL){
 		drawSpaceship(temp->closerEnemy);
@@ -83,6 +97,8 @@ void drawEnemies(ENEMIES* head){
 
 // Verifica se há colisão com algum inimigo, caso houver, retorna o inimigo
 SPACESHIP* checkCollisionFromEnemies(ENEMIES* enemies, int x, int y, int side){
+	if (!enemies) return NULL;
+
 	ENEMIES* head = enemies;
 	int collision = 0;
 

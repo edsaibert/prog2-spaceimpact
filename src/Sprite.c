@@ -42,5 +42,12 @@ void destroySprite(SPRITE* sprite){
 	al_destroy_bitmap(sprite->diagonalLeft);
 	al_destroy_bitmap(sprite->diagonalRight);
 
+	sprite->active = NULL;
+	sprite->front = NULL;
+	sprite->left = NULL;
+	sprite->right = NULL;
+	sprite->diagonalLeft = NULL;
+	sprite->diagonalRight = NULL;
+
 	free(sprite);
 }

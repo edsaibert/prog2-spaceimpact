@@ -69,6 +69,8 @@ int main(void){
     }
 
 	destroyScreen(sc);
+	destroySpaceship(sp);
+	destroyEnemyList(enemies);
 
     al_destroy_font(font);
     al_destroy_display(disp);
