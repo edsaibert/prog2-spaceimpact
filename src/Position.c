@@ -62,16 +62,16 @@ void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (
 	float epsilon = (float) 1/(SPACESHIP_SIDE + SPACESHIP_STEP);
 
 	if (sp->control->left && (!d || d[0] > -epsilon)){
-		positionFunction(sp, 1, 0, sc);
+		positionFunction(sp, 10, 0, sc);
 	}
 	if (sp->control->right && (!d || d[0] < epsilon)){
-		positionFunction(sp, 1, 1, sc);
+		positionFunction(sp, 10, 1, sc);
 	}
 	if (sp->control->up && (!d || d[1] > -epsilon)){
-		positionFunction(sp, 1, 2, sc);
+		positionFunction(sp, 10, 2, sc);
 	}
 	if (sp->control->down && (!d || d[1] < epsilon)){
-		positionFunction(sp, 1, 3, sc);
+		positionFunction(sp, 10, 3, sc);
 	}
 
 }

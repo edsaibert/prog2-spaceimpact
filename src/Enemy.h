@@ -25,7 +25,7 @@ void hitEnemy(ENEMIES* enemies, SPACESHIP* enemy);
 
 void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy);
 
-void updateScreenForEnemies(ENEMIES* head, SCREEN* sc);
+void updateScreenForEnemies(ENEMIES** head, SCREEN* sc);
 
 void drawEnemies(ENEMIES* enemies);
 

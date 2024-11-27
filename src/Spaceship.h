@@ -7,7 +7,7 @@
 #include "Sprite.h"
 #include "Gun.h"
 
-#define SPACESHIP_STEP 10 
+#define SPACESHIP_STEP 1 
 #define SPACESHIP_SIDE 50 
 
 typedef struct spaceship SPACESHIP;

@@ -49,25 +49,56 @@ void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy){
 
 }
 
-void updateScreenForEnemies(ENEMIES* head, SCREEN* sc) {                                            
-	ENEMIES* temp = head;
-    ENEMIES* nextTemp = NULL;
+void moveEnemySpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREEN* sc){
+	if (!trajectory){
+		sp->sprite->active = sp->sprite->front;
+		if (sp->x - stepCount*SPACESHIP_STEP - sp->side/2 >= -sp->side)
+			// Movimentação para a esquerda
+			sp->x = sp->x - stepCount*SPACESHIP_STEP;
+		else sp->x = -sp->side;
+	}
+	else if (trajectory == 1) {
+		sp->sprite->active = sp->sprite->front;	
+		if (sp->x + stepCount*SPACESHIP_STEP + sp->side/2 <= sc->max_x)
+			// Movimentação para a direita
+			sp->x = sp->x + stepCount*SPACESHIP_STEP;
+		else sp->x = sc->max_x - sp->side/2;
+	}
+	else if (trajectory == 2) {
+		sp->sprite->active = sp->sprite->left;
+		if (sp->y - stepCount*SPACESHIP_STEP - sp->side/2 >= 0)
+			// Movimentação para cima
+			sp->y = sp->y - stepCount*SPACESHIP_STEP;
+		else sp->y = sp->side/2;
+	}
+	else if (trajectory == 3) {
+		sp->sprite->active = sp->sprite->right;
+		if (sp->y + stepCount*SPACESHIP_STEP + sp->side/2 <= sc->max_y)
+			// Movimentação para baixo
+			sp->y = sp->y + stepCount*SPACESHIP_STEP;
+		else sp->y = sc->max_y - sp->side/2;
+	}
+}
 
-	if (head == NULL) return;
+void updateScreenForEnemies(ENEMIES** head, SCREEN* sc) {                                            
+    ENEMIES* temp = *head;
+    if (*head == NULL) return;
 
     while (temp != NULL) {
-		nextTemp = temp->next;
+        ENEMIES* nextTemp = temp->next;
 
-        moveSpaceship(temp->closerEnemy, 1, 0, sc);                                    
-		printf("mem: %p\n", temp->closerEnemy);
+        moveEnemySpaceship(temp->closerEnemy, 1, 0, sc);
 
-        if (temp->closerEnemy->x == temp->closerEnemy->side / 2) {
-			removeFromEnemyList(&head, temp->closerEnemy);
+        if (temp->closerEnemy->x == -temp->closerEnemy->side) {
+			printf("Removendo inimigo\n");
+            removeFromEnemyList(head, temp->closerEnemy);
+            temp = *head;  
+        } else {
+            temp = nextTemp;
         }
-        
-        temp = nextTemp;
-    }   
+    }
 }
+
 
 ENEMIES* createEnemyList(SCREEN* sc){
 	ENEMIES* head = NULL;

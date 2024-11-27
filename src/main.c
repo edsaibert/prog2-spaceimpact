@@ -18,7 +18,6 @@ int main(void){
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
 
 	SCREEN* sc = createScreen(500, 300);
-	if (!sc) return 1;
 
     ALLEGRO_DISPLAY* disp = al_create_display(sc->max_x, sc->max_y);
 
@@ -48,7 +47,7 @@ int main(void){
 			// Verifica colisão com inimigos e atualiza a posição dos inimigos
 			collision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);			
 			updateSpaceshipPosition(sp, collision, sc, moveSpaceship);	
-			updateScreenForEnemies(enemies, sc);
+			updateScreenForEnemies(&enemies, sc);
 
 			al_clear_to_color(al_map_rgb(255, 255, 255));
 			drawSpaceship(sp);
