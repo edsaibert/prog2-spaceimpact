@@ -8,6 +8,7 @@ JOYSTICK* createJoystick(){
 	jt->left = 0;
 	jt->up = 0;
 	jt->down = 0;
+	jt->shoot = 0;
 
 	return jt;	
 }
@@ -26,6 +27,10 @@ void updateJoystickUp(JOYSTICK* jt){
 
 void updateJoystickDown(JOYSTICK* jt){
 	jt->down = jt->down ^ 1;
+}
+
+void updateJoystickShoot(JOYSTICK* jt){
+	jt->shoot = jt->shoot ^ 1;
 }
 
 void destroyJoystick(JOYSTICK* jt){

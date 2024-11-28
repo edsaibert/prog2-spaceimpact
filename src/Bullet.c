@@ -105,7 +105,7 @@ void updateScreenForBullet(BULLET** head, SCREEN* sc) {
             continue;
         }
 
-        if (!temp->trajectory) temp->x += BULLET_MOVE;		//direita
+        if (!(temp->trajectory)) temp->x += BULLET_MOVE;		//direita
         if (temp->trajectory == 1) temp->x -= BULLET_MOVE;	//esquerda
         if (temp->trajectory == 2) temp->y += BULLET_MOVE;	//baixo
         if (temp->trajectory == 3) temp->y -= BULLET_MOVE;	//cima	

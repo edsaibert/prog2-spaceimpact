@@ -11,19 +11,22 @@
 #define SPACESHIP_SIDE 50 
 #define SPACESHIP_HEALTH 100
 
+
 typedef struct spaceship SPACESHIP;
 struct spaceship {
 	int x;
 	int y;
-	int enemy;
-	int health;
 	unsigned char side;
+	int health;
+
+	int enemy;
+
 	JOYSTICK* control;
 	GUN* gun;
 	SPRITE* sprite;
 };
 
-SPACESHIP* createSpaceship(int x, int y, int enemy, const char* spriteFolderPath);
+SPACESHIP* createSpaceship(int x, int y, int enemy, int health, const char* spriteFolderPath);
 void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction) (SPACESHIP*, int, unsigned char, SCREEN*));
 void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREEN* screen);
 void shootSpaceship(SPACESHIP* sp);

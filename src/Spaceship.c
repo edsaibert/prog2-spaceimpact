@@ -1,6 +1,6 @@
 #include "Spaceship.h"
 
-SPACESHIP* createSpaceship(int x, int y, int enemy, const char* spriteFolderPath){
+SPACESHIP* createSpaceship(int x, int y, int enemy, int health, const char* spriteFolderPath){
 	SPACESHIP* sp;
 
 	sp = (SPACESHIP*) malloc(sizeof(SPACESHIP));
@@ -14,7 +14,9 @@ SPACESHIP* createSpaceship(int x, int y, int enemy, const char* spriteFolderPath
 	sp->control = createJoystick();
 	sp->sprite = createSprite(spriteFolderPath);
 	sp->gun = createGun();
-	sp->health = 50;
+	sp->health = health;
+
+	
 
 	return sp;
 }
@@ -118,17 +120,19 @@ void hitSpaceship(SPACESHIP* sp, int damage){
 void shootSpaceship(SPACESHIP* sp){
 	if (!sp) return;
 	
-	if (sp->control->left)
+	if (sp->control->shoot && sp->control->left)
 		shotGun(sp->x, sp->y, 1, sp->gun); 
 
-	else if (sp->control->right)
+	else if (sp->control->shoot && sp->control->right)
 		shotGun(sp->x, sp->y, 0, sp->gun);
 
-	else if (sp->control->up)
+	else if (sp->control->shoot && sp->control->up)
 		shotGun(sp->x, sp->y, 3, sp->gun);
 
-	else if (sp->control->down)	
+	else if (sp->control->shoot && sp->control->down)	
 		shotGun(sp->x, sp->y, 2, sp->gun);
+
+	else if (sp->control->shoot) shotGun(sp->x, sp->y, 0, sp->gun); // A nave está parada
 
 }
 

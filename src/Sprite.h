@@ -14,6 +14,14 @@ struct sprite {
 	ALLEGRO_BITMAP* diagonalRight;		// number 4
 };
 
+/*
+struct specialSprite {
+	ALLEGRO_BITMAP* active;
+
+	ALLEGRO_BITMAP** spriteList;
+}
+*/
+
 SPRITE* createSprite(const char* basePath);
 
 void changeActiveSprite(SPRITE* sprite, int number);

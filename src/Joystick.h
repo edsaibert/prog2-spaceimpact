@@ -9,6 +9,7 @@ struct joystick {
 	unsigned char left;
 	unsigned char up;
 	unsigned char down;
+	unsigned char shoot;
 };
 
 JOYSTICK* createJoystick();					// constutor
@@ -22,6 +23,8 @@ void updateJoystickLeft(JOYSTICK* jt);		// muda o estado de jt->left
 void updateJoystickUp(JOYSTICK* jt);		// muda o estado de jt->up
 
 void updateJoystickDown(JOYSTICK* jt);		// muda o estado de jt->down
+
+void updateJoystickShoot(JOYSTICK* jt);
 
 void destroyJoystick(JOYSTICK* jt);
 

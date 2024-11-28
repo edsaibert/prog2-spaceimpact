@@ -14,7 +14,7 @@ int main(void){
 	al_init_primitives_addon();
 	al_init_image_addon();
 
-    ALLEGRO_TIMER* timer = al_create_timer(1.0 / 30.0);
+    ALLEGRO_TIMER* timer = al_create_timer(FPS);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
 
 	SCREEN* sc = createScreen(500, 300);
@@ -33,39 +33,41 @@ int main(void){
 
 	const char* sprite = "./sprites/spaceships/player/ship_1/";
 
-	SPACESHIP* sp = createSpaceship(20, 20, 0, sprite);
+	SPACESHIP* sp = createSpaceship(20, 20, 0, 20, sprite);
 	if (!sp) return 1;
 
 	SPACESHIP* enemyCollision;
-	ENEMIES* enemies = createEnemyList(sc);
-
-    while(1){
+	ENEMIES* enemies = createEnemyList(sc); 
+		
+	while(1){
         al_wait_for_event(queue, &e);
 
 		// Caso o evento seja de relógio
 		if (e.type == 30){
 			al_clear_to_color(al_map_rgb(255, 255, 255));
 
-			updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship);	
-			addEnemy(&enemies, sc);
-			// Verifica colisão com inimigos e atualiza a posição dos inimigos
-			enemyCollision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);			
+			if (!checkIfSpaceshipIsDead(sp)){
+				updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship);	
 
-			shootSpaceship(sp);
-			enemiesShoot(enemies, sc);
-			hitPlayer(&enemies, sp);
-			//bulletCollisionFromEnemies
-			//bulletColisionFromSpaceship
+				addEnemy(&enemies, sc);
+				// Verifica colisão com inimigos e atualiza a posição dos inimigos
+				enemyCollision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);			
+				enemiesShoot(enemies, sc);
+				shootSpaceship(sp);
+				hitPlayer(&enemies, sp);
+				//bulletCollisionFromEnemies
+				//bulletColisionFromSpaceship
 
-			updateScreenForBullet(&(sp->gun->shots), sc);	
-			updateScreenForEnemies(&enemies, sp, sc);
+				updateScreenForBullet(&(sp->gun->shots), sc);	
+				updateScreenForEnemies(&enemies, sp, sc);
 
-			//collision = checkCollisionFromBullets(enemyBullets, sp->x, sp->y, sp->side);
+				//collision = checkCollisionFromBullets(enemyBullets, sp->x, sp->y, sp->side);
 
-			drawSpaceship(sp);
-			drawEnemies(enemies);
-			drawEnemyBullets(enemies);
-			drawBullet(sp->gun->shots);
+				drawSpaceship(sp);
+				drawEnemies(enemies);
+				drawEnemyBullets(enemies);
+				drawBullet(sp->gun->shots);
+			}
 
 			al_flip_display();
 		}
@@ -80,11 +82,12 @@ int main(void){
 			else if (e.keyboard.keycode == 23) updateJoystickUp(sp->control);
 			// Tecla 'S'
 			else if (e.keyboard.keycode == 19) updateJoystickDown(sp->control);
+
+			else if (e.keyboard.keycode == ALLEGRO_KEY_SPACE) updateJoystickShoot(sp->control);
+
 		}
 
-		else if ((e.type == ALLEGRO_KEY_SPACE)){
-		}
-    }
+	}
 
 	destroyScreen(sc);
 	destroySpaceship(sp);

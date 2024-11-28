@@ -14,8 +14,14 @@ GUN* createGun(){
 BULLET* shotGun (int x, int y, unsigned char trajectory, GUN* gun) {
 	if (!gun) return NULL;
 
-	if (rand() % 100 < 10)
-		insertIntoBulletList(&(gun->shots), x, y, trajectory);
+	if (gun->timer > 0){
+		gun->timer -= 1;
+		return NULL;
+	}
+
+	insertIntoBulletList(&(gun->shots), x, y, trajectory);
+	gun->timer = PISTOL_COOLDOWN;	
+
 	return gun->shots;
 }
 

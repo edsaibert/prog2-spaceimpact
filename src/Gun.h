@@ -6,7 +6,7 @@
 #include "Bullet.h"
 #include "Position.h"
 
-#define PISTOL_COOLDOWN 10
+#define PISTOL_COOLDOWN 10 
 
 typedef struct gun {
 	unsigned char timer;

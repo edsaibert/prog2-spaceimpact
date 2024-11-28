@@ -6,8 +6,17 @@
 
 #define NUMBER_OF_ENEMIES 5
 
+typedef enum {
+	LINEAR,
+	UP_DOWN,
+	FOLLOW_X,
+	RANDOM,
+	FOLLOW_ALL
+} MOVEMENT_PATTERN;
+
 typedef struct enemies {
     SPACESHIP* closerEnemy;
+	MOVEMENT_PATTERN movement_pattern;
     struct enemies* next;
 } ENEMIES;
 
