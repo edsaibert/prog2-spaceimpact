@@ -34,7 +34,6 @@ void removeFromBulletList(BULLET** head, BULLET* bullet);
 
 /*
 	Checa se houve colisão com as balas e retorna a quantidade de dano causado
-	necessario mover essa função para Gun.h
 */
 int checkCollisionFromBullet(BULLET** head, int x, int y, int side);
 

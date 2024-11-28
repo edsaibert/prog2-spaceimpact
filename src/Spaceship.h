@@ -24,7 +24,9 @@ struct spaceship {
 };
 
 SPACESHIP* createSpaceship(int x, int y, int enemy, const char* spriteFolderPath);
+void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction) (SPACESHIP*, int, unsigned char, SCREEN*));
 void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREEN* screen);
+void shootSpaceship(SPACESHIP* sp);
 void hitSpaceship(SPACESHIP* sp, int damage);
 int checkIfSpaceshipIsDead(SPACESHIP* sp);
 void drawSpaceship(SPACESHIP* sp);

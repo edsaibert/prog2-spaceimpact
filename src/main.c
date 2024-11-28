@@ -44,27 +44,32 @@ int main(void){
 
 		// Caso o evento seja de relógio
 		if (e.type == 30){
+			al_clear_to_color(al_map_rgb(255, 255, 255));
+
+			updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship);	
 			addEnemy(&enemies, sc);
-			
 			// Verifica colisão com inimigos e atualiza a posição dos inimigos
 			enemyCollision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);			
+
+			shootSpaceship(sp);
+			enemiesShoot(enemies, sc);
 			hitPlayer(&enemies, sp);
 			//bulletCollisionFromEnemies
 			//bulletColisionFromSpaceship
 
-			updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship);	
+			updateScreenForBullet(&(sp->gun->shots), sc);	
 			updateScreenForEnemies(&enemies, sp, sc);
 
-			enemiesShoot(enemies, sc);
 			//collision = checkCollisionFromBullets(enemyBullets, sp->x, sp->y, sp->side);
 
-			al_clear_to_color(al_map_rgb(255, 255, 255));
 			drawSpaceship(sp);
 			drawEnemies(enemies);
 			drawEnemyBullets(enemies);
+			drawBullet(sp->gun->shots);
 
 			al_flip_display();
 		}
+	
 		// Verifica eventos do teclado
 		else if ((e.type == 10) || (e.type == 12)){
 			// Tecla 'A'
@@ -75,6 +80,9 @@ int main(void){
 			else if (e.keyboard.keycode == 23) updateJoystickUp(sp->control);
 			// Tecla 'S'
 			else if (e.keyboard.keycode == 19) updateJoystickDown(sp->control);
+		}
+
+		else if ((e.type == ALLEGRO_KEY_SPACE)){
 		}
     }
 

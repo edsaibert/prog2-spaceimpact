@@ -56,6 +56,37 @@ void removeFromBulletList(BULLET** head, BULLET* bullet) {
     }
 }
 
+/*
+	Checa colisão e se encontrada, remove a bala colidida da lista de balas
+*/
+int checkCollisionFromBullet(BULLET** head, int x, int y, int side) {
+    if (!head || !*head) return 0;
+
+    BULLET* temp = *head;
+	BULLET* prev = NULL;
+	int damage = 0;
+
+    while (temp != NULL) {
+		BULLET* nextTemp = temp->next;
+
+        if (checkCollision(temp->x, temp->y, x, y, 2, side)) {
+			removeFromBulletList(head, temp);            
+			damage += 1;
+
+			if (prev){
+				prev->next = nextTemp;
+			}
+			temp = nextTemp;
+			continue;
+		}
+           
+		prev = temp;
+		temp = nextTemp;
+    }
+
+    return damage; 
+}
+
 
 void updateScreenForBullet(BULLET** head, SCREEN* sc) {
     BULLET* temp = *head;
@@ -74,49 +105,25 @@ void updateScreenForBullet(BULLET** head, SCREEN* sc) {
             continue;
         }
 
-        if (!temp->trajectory) temp->x += BULLET_MOVE;
-        if (temp->trajectory == 1) temp->x -= BULLET_MOVE;
-        if (temp->trajectory == 2) temp->y += BULLET_MOVE;
-        if (temp->trajectory == 3) temp->y -= BULLET_MOVE;
+        if (!temp->trajectory) temp->x += BULLET_MOVE;		//direita
+        if (temp->trajectory == 1) temp->x -= BULLET_MOVE;	//esquerda
+        if (temp->trajectory == 2) temp->y += BULLET_MOVE;	//baixo
+        if (temp->trajectory == 3) temp->y -= BULLET_MOVE;	//cima	
 
         prev = temp; 
         temp = nextTemp; 
     }
 }
 
-int checkCollisionFromBullet(BULLET** head, int x, int y, int side){
-	if (!head || !*head) return 0;
-
-	BULLET* temp = *head;
-	BULLET* prev = NULL;
-
-	int damage = 0;
-
-	while (temp != NULL){
-		BULLET* nextTemp = temp->next;
-
-		if (checkCollision(temp->x, temp->y, x, y, 2, side)){
-			removeFromBulletList(head, temp);
-			if (prev) {
-				prev->next = nextTemp;
-			}
-			temp = nextTemp;
-
-			damage += 1;
-			continue;
-		}
-
-		prev = temp;
-		temp = nextTemp;
-	}
-
-	return damage;
-}
-
 void drawBullet(BULLET* bullet){
 	if (!bullet) return;
 
-	al_draw_filled_circle(bullet->x, bullet->y, 2, al_map_rgb(0, 0, 0));
+	BULLET* current = bullet;
+	
+	while (current != NULL){
+		al_draw_filled_circle(current->x, current->y, 2, al_map_rgb(0, 0, 0));
+		current = current->next;
+	}
 }
 
 

@@ -71,17 +71,20 @@ void drawEnemyBullets(ENEMIES* head){
 	}
 }
 
-void hitPlayer(ENEMIES** enemies, SPACESHIP* sp){
-	if (!enemies || !*enemies) return;
+
+void hitPlayer(ENEMIES** enemies, SPACESHIP* sp) {
+    if (!enemies || !*enemies) return;
+
+    ENEMIES* temp = *enemies;
 	int damage = 0;
 
-	ENEMIES* temp = *enemies;
-	while (temp->next != NULL){
-		damage = checkCollisionFromBullet(&(temp->closerEnemy->gun->shots), sp->x, sp->y, sp->side);
-		hitSpaceship(sp, damage);
-		temp = temp->next;
-	}
+    while (temp) {
+        damage = checkCollisionFromBullet(&(temp->closerEnemy->gun->shots), sp->x, sp->y, sp->side);
+        hitSpaceship(sp, damage); 
+        temp = temp->next;
+    }
 }
+
 
 
 void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {                                            

@@ -14,9 +14,11 @@ GUN* createGun(){
 BULLET* shotGun (int x, int y, unsigned char trajectory, GUN* gun) {
 	if (!gun) return NULL;
 
-	insertIntoBulletList(&(gun->shots), x, y, trajectory);
+	if (rand() % 100 < 10)
+		insertIntoBulletList(&(gun->shots), x, y, trajectory);
 	return gun->shots;
 }
+
 
 void destroyGun(GUN* gun){
 	if (!gun) return;

@@ -14,6 +14,7 @@ SPACESHIP* createSpaceship(int x, int y, int enemy, const char* spriteFolderPath
 	sp->control = createJoystick();
 	sp->sprite = createSprite(spriteFolderPath);
 	sp->gun = createGun();
+	sp->health = 50;
 
 	return sp;
 }
@@ -49,6 +50,32 @@ void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREE
 		else sp->y = sc->max_y - sp->side/2;
 	}
 }
+
+void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction) (SPACESHIP*, int, unsigned char, SCREEN*)){
+	float* d = NULL;
+
+	/*
+		Caso tenha tido colisao com um inimigo = enemy != NULL
+	*/
+	if (enemy){
+		d = normalizedDistance(sp->x, sp->y, enemy->x, enemy->y);	
+	}
+
+	if (sp->control->left && (!d || d[0] > -EPSILON)){
+		positionFunction(sp, 10, 0, sc);
+	}
+	if (sp->control->right && (!d || d[0] < EPSILON)){
+		positionFunction(sp, 10, 1, sc);
+	}
+	if (sp->control->up && (!d || d[1] > -EPSILON)){
+		positionFunction(sp, 10, 2, sc);
+	}
+	if (sp->control->down && (!d || d[1] < EPSILON)){
+		positionFunction(sp, 10, 3, sc);
+	}
+
+}
+
 
 /*
 void drawSpaceship(SPACESHIP* sp){
@@ -86,6 +113,23 @@ void hitSpaceship(SPACESHIP* sp, int damage){
 	if (sp->health <= 0){
 		sp->health = 0;
 	}
+}
+
+void shootSpaceship(SPACESHIP* sp){
+	if (!sp) return;
+	
+	if (sp->control->left)
+		shotGun(sp->x, sp->y, 1, sp->gun); 
+
+	else if (sp->control->right)
+		shotGun(sp->x, sp->y, 0, sp->gun);
+
+	else if (sp->control->up)
+		shotGun(sp->x, sp->y, 3, sp->gun);
+
+	else if (sp->control->down)	
+		shotGun(sp->x, sp->y, 2, sp->gun);
+
 }
 
 int checkIfSpaceshipIsDead(SPACESHIP* sp){
