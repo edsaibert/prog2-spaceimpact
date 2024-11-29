@@ -147,17 +147,17 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 				break;
 
 			case UP_DOWN:
-				int max_y = temp->originY + 10;
-				int min_y = temp->originY - 10;
+
+				printf("originY: %d, Y: %d", temp->originY, temp->closerEnemy->y);
 
 				updateJoystickLeft(temp->closerEnemy->control);
 
-				if (temp->closerEnemy->y <= max_y){
+				if (temp->closerEnemy->y > temp->originY + 10){
 					temp->closerEnemy->control->up = 1;
 					temp->closerEnemy->control->down = 0;
 					// updateJoystickUp(temp->closerEnemy->control);
 				}
-				else if (temp->closerEnemy->y >= min_y){
+				else if (temp->closerEnemy->y <= temp->originY - 10){
 					// updateJoystickDown(temp->closerEnemy->control);
 					temp->closerEnemy->control->up = 0;
 					temp->closerEnemy->control->down = 1;
