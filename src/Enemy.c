@@ -162,10 +162,20 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 					temp->closerEnemy->control->up = 0;
 					temp->closerEnemy->control->down = 1;
 				}
+
+				updateSpaceshipPosition(temp->closerEnemy, sp, sc, moveEnemySpaceship, compareFunctionUpDownEnemy);
+
+				break;
+
+			case FOLLOW_X:
+				break;
+
+			case FOLLOW_ALL:
+				break;
+
+			case RANDOM:
 				break;
 		}
-
-		updateSpaceshipPosition(temp->closerEnemy, sp, sc, moveEnemySpaceship);	
 
 
 		if (temp->closerEnemy->x == -temp->closerEnemy->side || temp->closerEnemy->health <= 0) {

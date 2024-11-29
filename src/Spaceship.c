@@ -53,9 +53,32 @@ void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREE
 	}
 }
 
-void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction) (SPACESHIP*, int, unsigned char, SCREEN*)){
+void compareFunctionPlayer(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction)(SPACESHIP *, int, unsigned char, SCREEN *)){
 	float* d = NULL;
+	/*
+		Caso tenha tido colisao com um inimigo = enemy != NULL
+	*/
+	if (enemy){
+		d = normalizedDistance(sp->x, sp->y, enemy->x, enemy->y);	
+	}
 
+	if (sp->control->left && (!d || d[0] > -EPSILON)){
+	positionFunction(sp, 1, 0, sc);
+	}
+	if (sp->control->right && (!d || d[0] < EPSILON)){
+	positionFunction(sp, 1, 1, sc);
+	}
+	if (sp->control->up && (!d || d[1] > -EPSILON)){
+	positionFunction(sp, 1, 2, sc);
+	}
+	if (sp->control->down && (!d || d[1] < EPSILON)){
+	positionFunction(sp, 1, 3, sc);
+	}
+
+}
+
+void compareFunctionUpDownEnemy(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction)(SPACESHIP *, int, unsigned char, SCREEN *)){
+	float* d = NULL;
 	/*
 		Caso tenha tido colisao com um inimigo = enemy != NULL
 	*/
@@ -75,6 +98,11 @@ void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (
 	if (sp->control->down){
 		positionFunction(sp, 1, 3, sc);
 	}
+}
+
+void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction) (SPACESHIP*, int, unsigned char, SCREEN*), void (*comparisonFunction) (SPACESHIP*, SPACESHIP*, SCREEN*, void (*positionFunction)(SPACESHIP*, int, unsigned char, SCREEN*))){
+
+	comparisonFunction(sp, enemy, sc, positionFunction);	
 
 }
 
