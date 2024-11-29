@@ -5,8 +5,8 @@ ENEMIES* createEnemyNode(SPACESHIP* enemy){
 	node->closerEnemy = enemy;
 	node->next = NULL;
 	node->movement_pattern = UP_DOWN;
-	
-	updateJoystickUp(enemy->control);
+	node->originX = enemy->x;
+	node->originY = enemy->y;
 
 	return node;
 }
@@ -94,6 +94,7 @@ void hitPlayer(ENEMIES** enemies, SPACESHIP* sp) {
 }
 
 void moveEnemySpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREEN* sc){
+
 	if (!trajectory){
 		sp->sprite->active = sp->sprite->front;
 			// Movimentação para a esquerda
@@ -140,19 +141,31 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 		}
 		*/
 
-		updateSpaceshipPosition(temp->closerEnemy, sp, sc, moveEnemySpaceship);	
-
 		switch (temp->movement_pattern){
 			case LINEAR:
 				updateJoystickLeft(temp->closerEnemy->control);
 				break;
 
 			case UP_DOWN:
+				int max_y = temp->originY + 10;
+				int min_y = temp->originY - 10;
+
 				updateJoystickLeft(temp->closerEnemy->control);
-				updateJoystickUp(temp->closerEnemy->control);
-				updateJoystickDown(temp->closerEnemy->control);
+
+				if (temp->closerEnemy->y <= max_y){
+					temp->closerEnemy->control->up = 1;
+					temp->closerEnemy->control->down = 0;
+					// updateJoystickUp(temp->closerEnemy->control);
+				}
+				else if (temp->closerEnemy->y >= min_y){
+					// updateJoystickDown(temp->closerEnemy->control);
+					temp->closerEnemy->control->up = 0;
+					temp->closerEnemy->control->down = 1;
+				}
 				break;
 		}
+
+		updateSpaceshipPosition(temp->closerEnemy, sp, sc, moveEnemySpaceship);	
 
 
 		if (temp->closerEnemy->x == -temp->closerEnemy->side || temp->closerEnemy->health <= 0) {

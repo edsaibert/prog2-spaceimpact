@@ -16,7 +16,11 @@ typedef enum {
 
 typedef struct enemies {
     SPACESHIP* closerEnemy;
+
 	MOVEMENT_PATTERN movement_pattern;
+	int originY;
+	int originX;
+
     struct enemies* next;
 } ENEMIES;
 

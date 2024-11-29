@@ -36,7 +36,7 @@ int main(void){
 	SPACESHIP* sp = createSpaceship(20, 20, 0, 20, sprite);
 	if (!sp) return 1;
 
-	SPACESHIP* enemyCollision;
+	SPACESHIP* enemyCollision = NULL;
 	ENEMIES* enemies = createEnemyList(sc); 
 		
 	while(1){

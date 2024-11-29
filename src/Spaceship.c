@@ -27,28 +27,28 @@ void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREE
 		sp->sprite->active = sp->sprite->front;
 		if (sp->x - stepCount*SPACESHIP_STEP - sp->side/2 >= 0)
 			// Movimentação para a esquerda
-			sp->x = sp->x - stepCount*SPACESHIP_STEP;
+			sp->x = sp->x - stepCount*SPACESHIP_STEP*5;
 		else sp->x = sp->side/2;
 	}
 	else if (trajectory == 1) {
 		sp->sprite->active = sp->sprite->front;	
 		if (sp->x + stepCount*SPACESHIP_STEP + sp->side/2 <= sc->max_x)
 			// Movimentação para a direita
-			sp->x = sp->x + stepCount*SPACESHIP_STEP;
+			sp->x = sp->x + stepCount*SPACESHIP_STEP*5;
 		else sp->x = sc->max_x - sp->side/2;
 	}
 	else if (trajectory == 2) {
 		sp->sprite->active = sp->sprite->left;
 		if (sp->y - stepCount*SPACESHIP_STEP - sp->side/2 >= 0)
 			// Movimentação para cima
-			sp->y = sp->y - stepCount*SPACESHIP_STEP;
+			sp->y = sp->y - stepCount*SPACESHIP_STEP*5;
 		else sp->y = sp->side/2;
 	}
 	else if (trajectory == 3) {
 		sp->sprite->active = sp->sprite->right;
 		if (sp->y + stepCount*SPACESHIP_STEP + sp->side/2 <= sc->max_y)
 			// Movimentação para baixo
-			sp->y = sp->y + stepCount*SPACESHIP_STEP;
+			sp->y = sp->y + stepCount*SPACESHIP_STEP*5;
 		else sp->y = sc->max_y - sp->side/2;
 	}
 }
@@ -63,17 +63,17 @@ void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (
 		d = normalizedDistance(sp->x, sp->y, enemy->x, enemy->y);	
 	}
 
-	if (sp->control->left && (!d || d[0] > -EPSILON)){
-		positionFunction(sp, 10, 0, sc);
+	if (sp->control->left){
+		positionFunction(sp, 1, 0, sc);
 	}
-	if (sp->control->right && (!d || d[0] < EPSILON)){
-		positionFunction(sp, 10, 1, sc);
+	if (sp->control->right){
+		positionFunction(sp, 1, 1, sc);
 	}
-	if (sp->control->up && (!d || d[1] > -EPSILON)){
-		positionFunction(sp, 10, 2, sc);
+	if (sp->control->up){
+		positionFunction(sp, 1, 2, sc);
 	}
-	if (sp->control->down && (!d || d[1] < EPSILON)){
-		positionFunction(sp, 10, 3, sc);
+	if (sp->control->down){
+		positionFunction(sp, 1, 3, sc);
 	}
 
 }

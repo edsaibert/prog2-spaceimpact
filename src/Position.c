@@ -16,15 +16,15 @@ float* normalizedDistance(int x1, int y1, int x2, int y2){
 
 	float squaredDistance = (float) (distance_x * distance_x + distance_y * distance_y);
 
-	if (squaredDistance != 0){
+	if (squaredDistance < 1e-6){
+		d[0] = 0;
+		d[1] = 1;
+	}
+	else {
 		float magnitude = sqrtf(squaredDistance);	
 		d[0] = distance_x / magnitude;
 		d[1] = distance_y / magnitude;
 		printf("d[0]: %f, d[1]: %f\n", d[0], d[1]);
-	}
-	else {
-		d[0] = 0;
-		d[1] = 0;
 	}
 	
 	return d;
