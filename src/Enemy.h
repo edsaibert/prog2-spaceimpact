@@ -31,9 +31,9 @@ SPACESHIP* checkCollisionFromEnemies(ENEMIES* enemies, int x, int y, int side);
 
 void hitPlayer(ENEMIES** enemies, SPACESHIP* sp);
 
-ENEMIES* createEnemyNode(SPACESHIP* enemy);
+ENEMIES* createEnemyNode(SPACESHIP* enemy, MOVEMENT_PATTERN movement_pattern);
 
-void insertIntoEnemyList(ENEMIES** head, SPACESHIP* enemy);
+void insertIntoEnemyList(ENEMIES** head, SPACESHIP* enemy, MOVEMENT_PATTERN movement_pattern);
 
 // Atualiza a lista de inimigos caso uma bala tenha tido colisão com um inimigo
 void hitEnemies(ENEMIES* enemies, SPACESHIP* enemy);
@@ -42,7 +42,7 @@ void enemiesShoot(ENEMIES* head, SCREEN* sc);
 
 void drawEnemyBullets(ENEMIES* head);
 
-void addEnemy(ENEMIES** head, SCREEN* sc);
+void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer);
 
 void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy);
 

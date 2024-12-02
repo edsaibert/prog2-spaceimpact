@@ -5,7 +5,7 @@
 #include "Screen.h"
 #include "Position.h"
 
-#define BULLET_MOVE 5
+#define BULLET_MOVE 4
 
 typedef struct bullet {
 	int x;

@@ -148,19 +148,20 @@ void hitSpaceship(SPACESHIP* sp, int damage){
 void shootSpaceship(SPACESHIP* sp){
 	if (!sp) return;
 	
-	if (sp->control->shoot && sp->control->left)
-		shotGun(sp->x, sp->y, 1, sp->gun); 
+	// if (sp->control->shoot && sp->control->left)
+	// 	shotGun(sp->x, sp->y, 1, sp->gun); 
 
-	else if (sp->control->shoot && sp->control->right)
-		shotGun(sp->x, sp->y, 0, sp->gun);
+	// else if (sp->control->shoot && sp->control->right)
+	// 	shotGun(sp->x, sp->y, 0, sp->gun);
 
-	else if (sp->control->shoot && sp->control->up)
-		shotGun(sp->x, sp->y, 3, sp->gun);
+	// else if (sp->control->shoot && sp->control->up)
+	// 	shotGun(sp->x, sp->y, 3, sp->gun);
 
-	else if (sp->control->shoot && sp->control->down)	
-		shotGun(sp->x, sp->y, 2, sp->gun);
+	// else if (sp->control->shoot && sp->control->down)	
+	// 	shotGun(sp->x, sp->y, 2, sp->gun);
 
-	else if (sp->control->shoot) shotGun(sp->x, sp->y, 0, sp->gun); // A nave está parada
+	// else if (sp->control->shoot) shotGun(sp->x, sp->y, 0, sp->gun); // A nave está parada
+	if (sp->control->shoot) shotGun(sp->x, sp->y, 0, sp->gun); // A nave está parada
 
 }
 

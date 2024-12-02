@@ -47,9 +47,10 @@ int main(void){
 			al_clear_to_color(al_map_rgb(255, 255, 255));
 
 			if (!checkIfSpaceshipIsDead(sp)){
+				addEnemy(&enemies, sc, timer);
+
 				updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship, compareFunctionPlayer);	
 
-				addEnemy(&enemies, sc);
 				// Verifica colisão com inimigos e atualiza a posição dos inimigos
 				enemyCollision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);			
 				enemiesShoot(enemies, sc);

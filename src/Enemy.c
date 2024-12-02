@@ -1,18 +1,18 @@
 #include "Enemy.h"
 
-ENEMIES* createEnemyNode(SPACESHIP* enemy){
+ENEMIES* createEnemyNode(SPACESHIP* enemy, MOVEMENT_PATTERN movement_pattern){
 	ENEMIES* node = (ENEMIES*) malloc(sizeof(ENEMIES));
 	node->closerEnemy = enemy;
 	node->next = NULL;
-	node->movement_pattern = UP_DOWN;
+	node->movement_pattern = movement_pattern;
 	node->originX = enemy->x;
 	node->originY = enemy->y;
 
 	return node;
 }
 
-void insertIntoEnemyList(ENEMIES** head, SPACESHIP* enemy){
-	ENEMIES* node = createEnemyNode(enemy);
+void insertIntoEnemyList(ENEMIES** head, SPACESHIP* enemy, MOVEMENT_PATTERN movement_pattern){
+	ENEMIES* node = createEnemyNode(enemy, movement_pattern);
 
 	if (*head == NULL)
 		*head = node;
@@ -56,7 +56,7 @@ void enemiesShoot(ENEMIES* head, SCREEN* sc){
 
 	ENEMIES* temp = head;
 	while (temp->next != NULL){
-		if (rand() % 100 < 20){
+		if (rand() % 100 < 10){
 			shotGun(temp->closerEnemy->x, temp->closerEnemy->y, 1, temp->closerEnemy->gun);
 		}
 		temp = temp->next;
@@ -143,7 +143,9 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 
 		switch (temp->movement_pattern){
 			case LINEAR:
-				updateJoystickLeft(temp->closerEnemy->control);
+				temp->closerEnemy->control->left = 1;
+				updateSpaceshipPosition(temp->closerEnemy, sp, sc, moveEnemySpaceship, compareFunctionUpDownEnemy);
+
 				break;
 
 			case UP_DOWN:
@@ -206,19 +208,35 @@ ENEMIES* createEnemyList(SCREEN* sc){
 }
 
 //adicionar enemy type
-void addEnemy(ENEMIES** head, SCREEN* sc){
-	int randomY = rand() % (sc->max_y + 1);
-
+void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer){
+	int randomY;
 	SPACESHIP *enemy;
 
+	// Quantos segundos se passaram desde o início do jogo
+	long int seconds = al_get_timer_count(timer)/60;
+
 	if (rand() % 150 == 0){
-		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/player/ship_1/");
-		updateJoystickUp(enemy->control);
+		randomY = rand() % ((sc->max_y - SPACESHIP_SIDE/2) + 1);
+		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/enemy/special-04/");
+
 
 		if (!enemy) {return;};
 		
-		insertIntoEnemyList(head, enemy);
+		insertIntoEnemyList(head, enemy, LINEAR);
 	}
+
+	else if (rand() % 150 == 0 && seconds > 15){
+		randomY = rand() % ((sc->max_y - SPACESHIP_SIDE/2) + 1);
+		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/player/ship_2/");
+		updateJoystickUp(enemy->control);
+
+
+		if (!enemy) {return;};
+		
+		insertIntoEnemyList(head, enemy, UP_DOWN);
+	}
+
+
 }
 
 void drawEnemies(ENEMIES* head){
