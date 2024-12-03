@@ -4,6 +4,7 @@
 #include "Screen.h"
 #include "Position.h"
 #include "Enemy.h"
+#include "Background.h"
 
 int main(void){
     al_init();
@@ -36,6 +37,8 @@ int main(void){
 	SPACESHIP* sp = createSpaceship(20, 20, 0, 20, sprite);
 	if (!sp) return 1;
 
+	BACKGROUND* bg = createBackground("./sprites/background/first/foreground.png", "./sprites/background/first/background.png", NULL, sc->max_x, sc->max_y);
+
 	SPACESHIP* enemyCollision = NULL;
 	ENEMIES* enemies = createEnemyList(sc); 
 		
@@ -44,7 +47,7 @@ int main(void){
 
 		// Caso o evento seja de relógio
 		if (e.type == 30){
-			al_clear_to_color(al_map_rgb(255, 255, 255));
+			al_clear_to_color(al_map_rgb(0, 0, 0));
 
 			if (!checkIfSpaceshipIsDead(sp)){
 				addEnemy(&enemies, sc, timer);
@@ -61,9 +64,11 @@ int main(void){
 
 				updateScreenForBullet(&(sp->gun->shots), sc);	
 				updateScreenForEnemies(&enemies, sp, sc);
+				updateScreenForBackground(bg);
 
 				//collision = checkCollisionFromBullets(enemyBullets, sp->x, sp->y, sp->side);
 
+				drawBackground(bg, sc);
 				drawSpaceship(sp);
 				drawEnemies(enemies);
 				drawEnemyBullets(enemies);

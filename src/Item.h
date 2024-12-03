@@ -25,9 +25,9 @@ typedef struct item {
     ALLEGRO_BITMAP* sprite;
 } ITEM;
 
-ITEM* createItemNode(int x, int y, ITEM_TYPE type, int value, const char path);
+ITEM* createItemNode(int x, int y, ITEM_TYPE type, int value, const char* path);
 
-void insertIntoItemList(ITEM** head, int x, int y, ITEM_TYPE type, int value, const char path);
+void insertIntoItemList(ITEM** head, int x, int y, ITEM_TYPE type, int value, const char* path);
 
 void doItemAction(SPACESHIP* sp, ITEM* item);
 

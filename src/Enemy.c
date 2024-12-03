@@ -212,11 +212,14 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer){
 	int randomY;
 	SPACESHIP *enemy;
 
-	// Quantos segundos se passaram desde o início do jogo
-	long int seconds = al_get_timer_count(timer)/60;
+	int minY = SPACESHIP_SIDE;
+	int maxY = sc->max_y - SPACESHIP_SIDE;
 
-	if (rand() % 150 == 0){
-		randomY = rand() % ((sc->max_y - SPACESHIP_SIDE/2) + 1);
+	// Quantos segundos se passaram desde o início do jogo
+	long int seconds = al_get_timer_count(timer)/30;
+
+	if (rand() % 150 < 5){
+		randomY = minY + (rand() % (maxY - minY + 1));
 		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/enemy/special-04/");
 
 
@@ -225,8 +228,8 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer){
 		insertIntoEnemyList(head, enemy, LINEAR);
 	}
 
-	else if (rand() % 150 == 0 && seconds > 15){
-		randomY = rand() % ((sc->max_y - SPACESHIP_SIDE/2) + 1);
+	else if (rand() % 150 < 5 && seconds > 15){
+		randomY = minY + (rand() % (maxY - minY + 1));
 		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/player/ship_2/");
 		updateJoystickUp(enemy->control);
 
@@ -235,15 +238,13 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer){
 		
 		insertIntoEnemyList(head, enemy, UP_DOWN);
 	}
-
-
 }
 
 void drawEnemies(ENEMIES* head){
 	if (!head) return;
 
 	ENEMIES* temp = head;
-	while (temp->next != NULL){
+	while (temp != NULL){
 		drawSpaceship(temp->closerEnemy);
 		temp = temp->next;
 	}

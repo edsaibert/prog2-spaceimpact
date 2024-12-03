@@ -5,15 +5,23 @@
 #include "Screen.h"
 #include "Position.h"
 
-#define BULLET_MOVE 4
+#define BULLET_MOVE 8
+
+typedef enum {
+	SIMPLE,
+	SPECIAL_1,
+	SPECIAL_2,
+} BULLET_TYPE;
 
 typedef struct bullet {
 	int x;
 	int y;
 	ALLEGRO_BITMAP* sprite;
 	unsigned char trajectory;
-	struct bullet *next;
+	
+	BULLET_TYPE bulletType;
 
+	struct bullet *next;
 } BULLET;
 
 /*

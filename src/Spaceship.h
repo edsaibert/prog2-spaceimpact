@@ -7,7 +7,7 @@
 #include "Sprite.h"
 #include "Gun.h"
 
-#define SPACESHIP_STEP 1 
+#define SPACESHIP_STEP 3
 #define SPACESHIP_SIDE 50 
 #define SPACESHIP_HEALTH 100
 

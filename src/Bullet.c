@@ -121,7 +121,10 @@ void drawBullet(BULLET* bullet){
 	BULLET* current = bullet;
 	
 	while (current != NULL){
+		// desenha uma linha preta em volta da bola branca (ajuda na visualização)
+
 		al_draw_filled_circle(current->x, current->y, 2, al_map_rgb(0, 0, 0));
+		al_draw_filled_circle(current->x, current->y, 1, al_map_rgb(255, 255, 255));
 		current = current->next;
 	}
 }

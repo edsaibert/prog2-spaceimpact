@@ -1,6 +1,6 @@
 #include "Item.h"
 
-ITEM* createItemNode(int x, int y, ITEM_TYPE type, int value, const char path){
+ITEM* createItemNode(int x, int y, ITEM_TYPE type, int value, const char* path){
     ITEM* node = (ITEM*) malloc(sizeof(ITEM));
     node->x = x;
     node->y = y;
@@ -14,8 +14,8 @@ ITEM* createItemNode(int x, int y, ITEM_TYPE type, int value, const char path){
     return node;
 }
 
-void insertIntoItemList(ITEM** head, int x, int y, ITEM_TYPE type, int value, const char path){
-    ITEM* node = createItemNode(x, y, type, value, sprite);
+void insertIntoItemList(ITEM** head, int x, int y, ITEM_TYPE type, int value, const char* path){
+    ITEM* node = createItemNode(x, y, type, value, path);
 
     if (*head == NULL)
         *head = node;
