@@ -11,7 +11,7 @@
 #include <time.h>
 #include <math.h>
 
-#define FPS 1.0/60.0
+#define FPS 1.0/30.0
 #define EPSILON 1/(SPACESHIP_SIDE + SPACESHIP_STEP)
 
 #endif
