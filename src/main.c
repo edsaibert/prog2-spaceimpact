@@ -5,6 +5,7 @@
 #include "Position.h"
 #include "Enemy.h"
 #include "Background.h"
+#include "Item.h"
 
 int main(void){
     al_init();
@@ -42,6 +43,10 @@ int main(void){
 
 	SPACESHIP* enemyCollision = NULL;
 	ENEMIES* enemies = createEnemyList(sc); 
+	ITEM* items = NULL;
+
+	// TO-DO
+	insertIntoItemList(&items, 100, 50, FLAMES, 10, "./sprites/others/voodoo.png");
 
 	int end = 0;
 		
@@ -58,7 +63,9 @@ int main(void){
 				updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship, compareFunctionPlayer);	
 
 				// Verifica colisão com inimigos e atualiza a posição dos inimigos
-				enemyCollision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);			
+				enemyCollision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);
+				checkCollisionFromItem(&items, sp);
+
 				enemiesShoot(enemies, sc);
 				shootSpaceship(sp);
 				hitPlayer(&enemies, sp);
@@ -72,6 +79,7 @@ int main(void){
 				//collision = checkCollisionFromBullets(enemyBullets, sp->x, sp->y, sp->side);
 
 				drawBackground(bg, sc);
+				drawItem(items);
 				drawSpaceship(sp);
 				drawEnemies(enemies);
 				drawEnemyBullets(enemies);

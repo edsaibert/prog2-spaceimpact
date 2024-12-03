@@ -1,13 +1,16 @@
 #include "Bullet.h"
 
-BULLET* createBulletNode(int x, int y, unsigned char trajectory){
+BULLET* createBulletNode(int x, int y, unsigned char trajectory, BULLET_TYPE bulletType){
 	BULLET* node = (BULLET*) malloc(sizeof(BULLET));
 	node->x = x;
 	node->y = y;
 	node->trajectory = trajectory;
 	node->next = NULL;
-	node->sprite = NULL;
-	// node->sprite = al_load_bitmap("./sprites/explosions/explosion-1-g/");
+	node->bulletType = bulletType;
+
+	if (bulletType == SPECIAL)
+		node->sprite = al_load_bitmap("./sprites/others/special_attack.png");
+	else node->sprite = NULL;
 
 	return node;
 }
@@ -17,8 +20,8 @@ BULLET* createBulletList(){
 	return head;
 }
 
-void insertIntoBulletList(BULLET** head, int x, int y, unsigned char trajectory){
-	BULLET* node = createBulletNode(x, y, trajectory);
+void insertIntoBulletList(BULLET** head, int x, int y, unsigned char trajectory, BULLET_TYPE bulletType){
+	BULLET* node = createBulletNode(x, y, trajectory, bulletType);
 
 	if (*head == NULL)
 		*head = node;
@@ -122,9 +125,17 @@ void drawBullet(BULLET* bullet){
 	
 	while (current != NULL){
 		// desenha uma linha preta em volta da bola branca (ajuda na visualização)
+		switch (bullet->bulletType){
+			case SIMPLE:
+				al_draw_filled_circle(current->x, current->y, 2, al_map_rgb(0, 0, 0));
+				al_draw_filled_circle(current->x, current->y, 1, al_map_rgb(255, 255, 255));
+				break;
 
-		al_draw_filled_circle(current->x, current->y, 2, al_map_rgb(0, 0, 0));
-		al_draw_filled_circle(current->x, current->y, 1, al_map_rgb(255, 255, 255));
+			case SPECIAL:
+				al_draw_bitmap(current->sprite, current->x, current->y, 0);
+				break;
+				
+		}
 		current = current->next;
 	}
 }

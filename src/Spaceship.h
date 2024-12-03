@@ -17,7 +17,9 @@ struct spaceship {
 	int x;
 	int y;
 	unsigned char side;
+	
 	int health;
+	int shield;
 
 	int enemy;
 

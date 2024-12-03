@@ -28,7 +28,19 @@ void insertIntoItemList(ITEM** head, int x, int y, ITEM_TYPE type, int value, co
     }
 }
 
-void doItemAction(SPACESHIP* sp, ITEM* item){}
+void doItemAction(SPACESHIP* sp, ITEM* item){
+	switch (item->type){
+		case HEALTH:
+			break;
+		case SHIELD:
+			break;
+		case FLAMES:
+			sp->gun->specialAttack = 10;
+			break;
+		case LIGHTNING:
+			break;
+	}
+}
 
 void checkCollisionFromItem(ITEM** head, SPACESHIP* sp){
     if (!head || !*head || !sp) return;
@@ -57,8 +69,13 @@ void checkCollisionFromItem(ITEM** head, SPACESHIP* sp){
 
 void drawItem(ITEM* item){
     if (!item) return;
+	ITEM* temp = item;
 
-    al_draw_bitmap(item->sprite, item->x, item->y, 0);
+	while (temp != NULL){
+    	al_draw_bitmap(temp->sprite, item->x, item->y, 0);
+		temp = temp->next;
+	}
+
 }
 
 void removeFromItemList(ITEM** head, ITEM* item){

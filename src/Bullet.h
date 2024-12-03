@@ -9,8 +9,7 @@
 
 typedef enum {
 	SIMPLE,
-	SPECIAL_1,
-	SPECIAL_2,
+	SPECIAL,
 } BULLET_TYPE;
 
 typedef struct bullet {
@@ -32,9 +31,9 @@ typedef struct bullet {
 	3: para cima
 */
 
-BULLET* createBulletNode(int x, int y, unsigned char trajectory);
+BULLET* createBulletNode(int x, int y, unsigned char trajectory, BULLET_TYPE bulletType);
 
-void insertIntoBulletList(BULLET** head, int x, int y, unsigned char trajectory);
+void insertIntoBulletList(BULLET** head, int x, int y, unsigned char trajectory, BULLET_TYPE bulletType);
 
 void drawBullet(BULLET* bullet);
 
@@ -50,3 +49,4 @@ void updateScreenForBullet(BULLET** head, SCREEN* sc);
 void destroyBulletList(BULLET* head);
 
 #endif
+

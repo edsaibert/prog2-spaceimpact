@@ -7,9 +7,12 @@
 #include "Position.h"
 
 #define PISTOL_COOLDOWN 10 
+#define PISTOL_SPECIAL_ATTACK 120 
 
 typedef struct gun {
 	unsigned char timer;
+	int specialAttack;
+
 	BULLET *shots;
 } GUN;
 
