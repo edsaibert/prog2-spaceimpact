@@ -74,7 +74,15 @@ int checkCollisionFromBullet(BULLET** head, int x, int y, int side) {
 
         if (checkCollision(temp->x, temp->y, x, y, 2, side)) {
 			removeFromBulletList(head, temp);            
-			damage += 1;
+
+			switch (temp->bulletType){
+				case SIMPLE:
+					damage += 1;
+					break;
+				case SPECIAL:
+					damage += 3;
+					break;
+			}
 
 			if (prev){
 				prev->next = nextTemp;

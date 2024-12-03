@@ -108,12 +108,9 @@ int main(void){
 			// Tecla 'S'
 			else if (e.keyboard.keycode == 19) updateJoystickDown(sp->control);
 
-			else if (e.keyboard.keycode == ALLEGRO_KEY_SPACE) {
-				if (!end)
-					updateJoystickShoot(sp->control);
-				else 
-					break;		
-			};
+			else if (e.keyboard.keycode == ALLEGRO_KEY_SPACE) updateJoystickShoot(sp->control);
+	
+			else if (e.keyboard.keycode == ALLEGRO_KEY_ENTER) if (end) break;
 
 		}
 
