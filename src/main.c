@@ -114,6 +114,8 @@ int main(void){
 	destroyScreen(sc);
 	destroySpaceship(sp);
 	destroyEnemyList(enemies);
+	destroyBackground(bg);
+	destroyBackground(bg_end);
 
     al_destroy_font(font);
     al_destroy_display(disp);
