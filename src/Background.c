@@ -58,6 +58,10 @@ void drawBackground(BACKGROUND* bg, SCREEN* sc){
 		}
 	}
 
+	if (bg->middleground){
+		al_draw_bitmap(bg->middleground, 0, 0, 0);	
+	}
+
 	if (bg->foreground){
 		al_draw_bitmap(bg->foreground, 0, 0, 0);	
 	}

@@ -38,9 +38,12 @@ int main(void){
 	if (!sp) return 1;
 
 	BACKGROUND* bg = createBackground("./sprites/background/first/foreground.png", "./sprites/background/first/background.png", NULL, sc->max_x, sc->max_y);
+	BACKGROUND* bg_end = createBackground("./sprites/background/end/text.png", "./sprites/background/end/end.png", "./sprites/background/end/planet.png", sc->max_x, sc->max_y);
 
 	SPACESHIP* enemyCollision = NULL;
 	ENEMIES* enemies = createEnemyList(sc); 
+
+	int end = 0;
 		
 	while(1){
         al_wait_for_event(queue, &e);
@@ -74,9 +77,17 @@ int main(void){
 				drawEnemyBullets(enemies);
 				drawBullet(sp->gun->shots);
 			}
+			else {
+				updateScreenForBackground(bg_end);
+				drawBackground(bg_end, sc);	
+				end = 1;
+			}
+
 
 			al_flip_display();
 		}
+
+		
 	
 		// Verifica eventos do teclado
 		else if ((e.type == 10) || (e.type == 12)){
@@ -89,7 +100,12 @@ int main(void){
 			// Tecla 'S'
 			else if (e.keyboard.keycode == 19) updateJoystickDown(sp->control);
 
-			else if (e.keyboard.keycode == ALLEGRO_KEY_SPACE) updateJoystickShoot(sp->control);
+			else if (e.keyboard.keycode == ALLEGRO_KEY_SPACE) {
+				if (!end)
+					updateJoystickShoot(sp->control);
+				else 
+					break;		
+			};
 
 		}
 
