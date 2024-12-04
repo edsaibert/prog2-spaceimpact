@@ -74,6 +74,18 @@ void drawEnemyBullets(ENEMIES* head){
 	}
 }
 
+int countEnemies(ENEMIES* enemies){
+	int count = 0;
+	ENEMIES* temp = enemies;
+
+	while (temp){
+		count += temp->closerEnemy->health;
+		temp = temp->next;
+	}
+
+	return count;
+}
+
 void hitPlayer(ENEMIES** enemies, SPACESHIP* sp, SCREEN* sc) {
     if (!enemies || !*enemies) return;
 
@@ -85,8 +97,10 @@ void hitPlayer(ENEMIES** enemies, SPACESHIP* sp, SCREEN* sc) {
         damageToPlayer = checkCollisionFromBullet(&(temp->closerEnemy->gun->shots), sp->x, sp->y, sp->side);
         hitSpaceship(sp, damageToPlayer); 
 
+		// Se o player pegou o ataque especial LIGTHNING
 		if (sp->gun->isLightning){
 			sp->gun->isLightning = 0;
+			sp->score += countEnemies(*enemies);
 
 			destroyEnemyList(*enemies);
 			*enemies = NULL;
@@ -95,6 +109,7 @@ void hitPlayer(ENEMIES** enemies, SPACESHIP* sp, SCREEN* sc) {
 
 		damageToEnemies = checkCollisionFromBullet(&(sp->gun->shots), temp->closerEnemy->x, temp->closerEnemy->y, temp->closerEnemy->side);
 		hitSpaceship(temp->closerEnemy, damageToEnemies);
+		sp->score += damageToEnemies;
 
         temp = temp->next;
     }

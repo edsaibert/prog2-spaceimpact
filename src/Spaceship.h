@@ -20,6 +20,7 @@ struct spaceship {
 	
 	int health;
 	int shield;
+	int score;
 
 	int enemy;
 

@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Background.h"
 #include "Item.h"
+#include "Uid.h"
 
 int main(void){
     al_init();
@@ -15,6 +16,7 @@ int main(void){
 
 	al_init_primitives_addon();
 	al_init_image_addon();
+	al_init_font_addon();
 
     ALLEGRO_TIMER* timer = al_create_timer(FPS);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
@@ -99,6 +101,7 @@ int main(void){
 				drawEnemies(enemies);
 				drawEnemyBullets(enemies);
 				drawBullet(sp->gun->shots);
+				drawHealthShieldAndScore(sp, sc, font);
 			}
 			else {
 				updateScreenForBackground(bg_end);

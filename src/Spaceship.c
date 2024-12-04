@@ -15,6 +15,7 @@ SPACESHIP* createSpaceship(int x, int y, int enemy, int health, const char* spri
 	sp->sprite = createSprite(spriteFolderPath);
 	sp->gun = createGun();
 	sp->health = health;
+	sp->score = 0;
 	sp->shield = 0;
 
 	return sp;
