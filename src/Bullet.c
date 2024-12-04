@@ -8,9 +8,14 @@ BULLET* createBulletNode(int x, int y, unsigned char trajectory, BULLET_TYPE bul
 	node->next = NULL;
 	node->bulletType = bulletType;
 
-	if (bulletType == SPECIAL)
-		node->sprite = al_load_bitmap("./sprites/others/special_attack.png");
-	else node->sprite = NULL;
+	if (bulletType == SPECIAL){
+		node->side = 15;
+		node->sprite = al_load_bitmap("./sprites/others/spark1.png");
+	}
+	else {
+		node->side = 10;
+		node->sprite = al_load_bitmap("./sprites/others/spark.png");
+	};
 
 	return node;
 }
@@ -72,7 +77,7 @@ int checkCollisionFromBullet(BULLET** head, int x, int y, int side) {
     while (temp != NULL) {
 		BULLET* nextTemp = temp->next;
 
-        if (checkCollision(temp->x, temp->y, x, y, 2, side)) {
+        if (checkCollision(temp->x, temp->y, x, y, temp->side, side)) {
 			removeFromBulletList(head, temp);            
 
 			switch (temp->bulletType){
@@ -132,18 +137,16 @@ void drawBullet(BULLET* bullet){
 	BULLET* current = bullet;
 	
 	while (current != NULL){
-		// desenha uma linha preta em volta da bola branca (ajuda na visualização)
-		switch (bullet->bulletType){
-			case SIMPLE:
-				al_draw_filled_circle(current->x, current->y, 2, al_map_rgb(0, 0, 0));
-				al_draw_filled_circle(current->x, current->y, 1, al_map_rgb(255, 255, 255));
-				break;
+		al_draw_scaled_bitmap(
+			current->sprite,           
+			0, 0,                      
+			al_get_bitmap_width(current->sprite),   
+			al_get_bitmap_height(current->sprite),  
+			current->x - current->side/2, current->y - current->side/2,    
+			current->side, current->side,
+			0                          
+		);
 
-			case SPECIAL:
-				al_draw_bitmap(current->sprite, current->x, current->y, 0);
-				break;
-				
-		}
 		current = current->next;
 	}
 }

@@ -228,7 +228,7 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer){
 		insertIntoEnemyList(head, enemy, LINEAR);
 	}
 
-	else if (rand() % 150 < 5 && seconds > 15){
+	else if (rand() % 150 < 2 && seconds > 15){
 		randomY = minY + (rand() % (maxY - minY + 1));
 		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/player/ship_2/");
 		updateJoystickUp(enemy->control);

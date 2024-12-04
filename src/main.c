@@ -45,9 +45,6 @@ int main(void){
 	ENEMIES* enemies = createEnemyList(sc); 
 	ITEM* items = NULL;
 
-	// TO-DO
-	insertIntoItemList(&items, 100, 50, FLAMES, 10, "./sprites/others/voodoo.png");
-
 	int end = 0;
 		
 	while(1){
@@ -59,6 +56,7 @@ int main(void){
 
 			if (!checkIfSpaceshipIsDead(sp)){
 				addEnemy(&enemies, sc, timer);
+				addItem(&items, sc, timer);
 
 				updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship, compareFunctionPlayer);	
 

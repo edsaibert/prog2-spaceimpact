@@ -15,6 +15,7 @@ typedef enum {
 typedef struct bullet {
 	int x;
 	int y;
+	int side;
 	ALLEGRO_BITMAP* sprite;
 	unsigned char trajectory;
 	

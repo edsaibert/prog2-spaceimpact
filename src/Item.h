@@ -19,6 +19,8 @@ typedef struct item {
     int x;
     int y;
     int value;
+    int side;
+
     struct item* next;
 
     ITEM_TYPE type;
@@ -28,6 +30,8 @@ typedef struct item {
 ITEM* createItemNode(int x, int y, ITEM_TYPE type, int value, const char* path);
 
 void insertIntoItemList(ITEM** head, int x, int y, ITEM_TYPE type, int value, const char* path);
+
+void addItem(ITEM** head, SCREEN* sc, ALLEGRO_TIMER* timer );
 
 void doItemAction(SPACESHIP* sp, ITEM* item);
 
