@@ -29,7 +29,7 @@ ENEMIES* createEnemyList(SCREEN* sc);
 // Checa se existe uma colisão entre as coordenadas dadas e algum inimigo e caso tenha, retorna o inimigo com o qual o as coordenadas colidiram
 SPACESHIP* checkCollisionFromEnemies(ENEMIES* enemies, int x, int y, int side);
 
-void hitPlayer(ENEMIES** enemies, SPACESHIP* sp);
+void hitPlayer(ENEMIES** enemies, SPACESHIP* sp, SCREEN* sc);
 
 ENEMIES* createEnemyNode(SPACESHIP* enemy, MOVEMENT_PATTERN movement_pattern);
 

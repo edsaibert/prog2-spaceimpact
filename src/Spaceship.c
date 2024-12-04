@@ -135,9 +135,9 @@ void drawSpaceship(SPACESHIP* sp){
 
 void hitSpaceship(SPACESHIP* sp, int damage){
 	if (!sp) return;
-
-	sp->health -= damage;
-	printf("Spaceship health: %d\n", sp->health);
+	
+	if (sp->shield) sp->shield -= damage;
+	else sp->health -= damage;
 
 	if (sp->health <= 0){
 		sp->health = 0;
@@ -177,8 +177,16 @@ void drawSpaceship(SPACESHIP* sp) {
     float cx = sp->side / 2.0f;     
 	float cy = sp->side / 2.0f;
 
-    float angleEnemy = 3.0f * ALLEGRO_PI / 2.0f; // 270 
-	float angle = ALLEGRO_PI / 2.0f; // 90
+    float angleEnemy = 3.0f * ALLEGRO_PI / 2.0f;
+	float angle = ALLEGRO_PI / 2.0f;
+
+	if (sp->shield){
+		al_draw_filled_circle(
+		sp->x, sp->y,
+		sp->side/2 + 1,
+		al_map_rgba(186, 245, 255, 75)
+		);
+	}
 
 	if (sp->enemy){
 		al_draw_rotated_bitmap(

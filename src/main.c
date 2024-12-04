@@ -45,6 +45,8 @@ int main(void){
 	ENEMIES* enemies = createEnemyList(sc); 
 	ITEM* items = NULL;
 
+	int thunder = 0;
+
 	int end = 0;
 		
 	while(1){
@@ -55,6 +57,18 @@ int main(void){
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 
 			if (!checkIfSpaceshipIsDead(sp)){
+
+				if (thunder){
+					if (thunder % 10 < 5)
+						drawBackground(bg, sc);
+					else
+						al_draw_filled_rectangle(0, 0, sc->max_x, sc->max_y, al_map_rgb(255, 255, 255));
+
+					thunder -= 1;
+
+					continue;
+				}
+
 				addEnemy(&enemies, sc, timer);
 				addItem(&items, sc, timer);
 
@@ -66,7 +80,10 @@ int main(void){
 
 				enemiesShoot(enemies, sc);
 				shootSpaceship(sp);
-				hitPlayer(&enemies, sp);
+
+				if (sp->gun->isLightning) thunder = 30 * 3;
+
+				hitPlayer(&enemies, sp, sc);
 				//bulletCollisionFromEnemies
 				//bulletColisionFromSpaceship
 

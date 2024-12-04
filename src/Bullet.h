@@ -10,6 +10,7 @@
 typedef enum {
 	SIMPLE,
 	SPECIAL,
+	THUNDER	
 } BULLET_TYPE;
 
 typedef struct bullet {

@@ -88,6 +88,7 @@ void doItemAction(SPACESHIP* sp, ITEM* item){
 			sp->gun->specialAttack = item->value;
 			break;
 		case LIGHTNING:
+            sp->gun->isLightning = 1;
 			break;
 	}
 }
@@ -101,7 +102,7 @@ void checkCollisionFromItem(ITEM** head, SPACESHIP* sp){
     while (temp != NULL) {
         ITEM* nextTemp = temp->next;
 
-        if (checkCollision(temp->x, temp->y, sp->x, sp->y, 2, sp->side)) {
+        if (checkCollision(temp->x, temp->y, sp->x, sp->y, temp->side, sp->side)) {
             doItemAction(sp, temp);
             removeFromItemList(head, temp);
             if (prev) {

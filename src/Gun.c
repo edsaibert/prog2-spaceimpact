@@ -8,6 +8,7 @@ GUN* createGun(){
 	gun->shots = NULL;	// Inicializado em NULL
 	gun->timer = 0;
 	gun->specialAttack = 0;
+	gun->isLightning = 0;
 	
 	return gun;
 }
@@ -23,6 +24,9 @@ BULLET* shotGun (int x, int y, unsigned char trajectory, GUN* gun) {
 	if (gun->specialAttack){
 		insertIntoBulletList(&(gun->shots), x, y, trajectory, SPECIAL);
 		gun->specialAttack -= 1;
+	}
+	else if (gun->isLightning){
+		insertIntoBulletList(&(gun->shots), x, y, trajectory, THUNDER);
 	}
 	else 
 		insertIntoBulletList(&(gun->shots), x, y, trajectory, SIMPLE);

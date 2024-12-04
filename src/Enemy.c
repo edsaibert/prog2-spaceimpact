@@ -74,8 +74,7 @@ void drawEnemyBullets(ENEMIES* head){
 	}
 }
 
-
-void hitPlayer(ENEMIES** enemies, SPACESHIP* sp) {
+void hitPlayer(ENEMIES** enemies, SPACESHIP* sp, SCREEN* sc) {
     if (!enemies || !*enemies) return;
 
     ENEMIES* temp = *enemies;
@@ -84,9 +83,17 @@ void hitPlayer(ENEMIES** enemies, SPACESHIP* sp) {
 
     while (temp) {
         damageToPlayer = checkCollisionFromBullet(&(temp->closerEnemy->gun->shots), sp->x, sp->y, sp->side);
-		damageToEnemies = checkCollisionFromBullet(&(sp->gun->shots), temp->closerEnemy->x, temp->closerEnemy->y, temp->closerEnemy->side);
-
         hitSpaceship(sp, damageToPlayer); 
+
+		if (sp->gun->isLightning){
+			sp->gun->isLightning = 0;
+
+			destroyEnemyList(*enemies);
+			*enemies = NULL;
+			return;
+		}
+
+		damageToEnemies = checkCollisionFromBullet(&(sp->gun->shots), temp->closerEnemy->x, temp->closerEnemy->y, temp->closerEnemy->side);
 		hitSpaceship(temp->closerEnemy, damageToEnemies);
 
         temp = temp->next;
@@ -149,9 +156,6 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 				break;
 
 			case UP_DOWN:
-
-				printf("originY: %d, Y: %d", temp->originY, temp->closerEnemy->y);
-
 				updateJoystickLeft(temp->closerEnemy->control);
 
 				if (temp->closerEnemy->y > temp->originY + 10){
