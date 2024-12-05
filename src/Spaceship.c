@@ -1,6 +1,6 @@
 #include "Spaceship.h"
 
-SPACESHIP* createSpaceship(int x, int y, int enemy, int health, const char* spriteFolderPath){
+SPACESHIP* createSpaceship(int x, int y, int enemy, int health, int side, const char* spriteFolderPath){
 	SPACESHIP* sp;
 
 	sp = (SPACESHIP*) malloc(sizeof(SPACESHIP));
@@ -10,7 +10,7 @@ SPACESHIP* createSpaceship(int x, int y, int enemy, int health, const char* spri
 	sp->x = x;
 	sp->y = y;
 	sp->enemy = enemy;
-	sp->side = SPACESHIP_SIDE; // default para 10
+	sp->side = side;
 	sp->control = createJoystick();
 	sp->sprite = createSprite(spriteFolderPath);
 	sp->gun = createGun();

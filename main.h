@@ -21,4 +21,15 @@ typedef enum {
     LAST_BOSS
 } LEVEL_ID;
 
+typedef enum {
+	LINEAR,
+	UP_DOWN,
+	FOLLOW_X,
+	DOWN,
+	FOLLOW_ALL,
+	DODGE,
+	SPECIAL_ATTACK
+} MOVEMENT_PATTERN;
+
+
 #endif

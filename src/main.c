@@ -38,7 +38,7 @@ int main(void){
 
 	const char* sprite = "./sprites/spaceships/player/ship_1/";
 
-	SPACESHIP* sp = createSpaceship(20, 20, 0, 20, sprite);
+	SPACESHIP* sp = createSpaceship(20, 20, 0, 20, 50, sprite);
 	if (!sp) return 1;
 
 	BACKGROUND* bg = createBackground("./sprites/background/first/foreground.png", "./sprites/background/first/background.png", NULL, sc->max_x, sc->max_y);

@@ -245,7 +245,7 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer, LEVEL_ID current
 
 	if (rand() % 170 + 1 < 5){
 		randomY = minY + (rand() % (maxY - minY + 1));
-		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/enemy/special-04/");
+		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, SPACESHIP_SIDE, "./sprites/spaceships/enemy/special-04/");
 
 
 		if (!enemy) {return;};
@@ -255,7 +255,7 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer, LEVEL_ID current
 
 	else if (currentLevel == FIRST && rand() % 170 + 1 < 2 && seconds > 15){
 		randomY = minY + (rand() % (maxY - minY + 1));
-		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/player/ship_2/");
+		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, SPACESHIP_SIDE, "./sprites/spaceships/player/ship_2/");
 		updateJoystickUp(enemy->control);
 
 
@@ -266,7 +266,7 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer, LEVEL_ID current
 
 	else if (currentLevel == LAST && rand() % 170 + 1 < 2 && seconds > 20 && noneWithType(*head, FOLLOW_X)){
 		randomY = minY + (rand() % (maxY - minY + 1));
-		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 5, "./sprites/spaceships/player/ship_3/");
+		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 5, SPACESHIP_SIDE, "./sprites/spaceships/player/ship_3/");
 		updateJoystickUp(enemy->control);
 
 		if (!enemy) {return;};
@@ -276,7 +276,7 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer, LEVEL_ID current
 
 	if (currentLevel == LAST && *head == NULL){
 		for (int i = 2 * SPACESHIP_SIDE; i < sc->max_x-SPACESHIP_SIDE; i += 100){
-			enemy = createSpaceship(i, -SPACESHIP_SIDE, 1, 5, "./sprites/spaceships/enemy/special-02/");
+			enemy = createSpaceship(i, -SPACESHIP_SIDE, 1, 5, SPACESHIP_SIDE, "./sprites/spaceships/enemy/special-02/");
 			if (!enemy) {return;};
 			insertIntoEnemyList(head, enemy, DOWN);
 		}

@@ -29,7 +29,7 @@ struct spaceship {
 	SPRITE* sprite;
 };
 
-SPACESHIP* createSpaceship(int x, int y, int enemy, int health, const char* spriteFolderPath);
+SPACESHIP* createSpaceship(int x, int y, int enemy, int health, int side, const char* spriteFolderPath);
 
 void compareFunctionPlayer(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction)(SPACESHIP *, int, unsigned char, SCREEN *));
 

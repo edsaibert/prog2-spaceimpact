@@ -10,6 +10,7 @@
 #include "Background.h"
 #include "Item.h"
 #include "Uid.h"
+#include "Boss.h"
 
 typedef struct level {
     LEVEL_ID currentLevel;    
@@ -26,7 +27,7 @@ LEVEL* beginGame(SPACESHIP* sp, ENEMIES* enemies, SCREEN* sc, ITEM* items, BACKG
 
 int loadLevel(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* enemyCollision, int* thunder);
 
-int loadFirstBoss(LEVEL* game);
+void loadFirstBoss(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* enemyCollision, int *thunder);
 
 void endFirstBoss(LEVEL* game);
 
