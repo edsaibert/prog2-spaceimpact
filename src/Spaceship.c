@@ -100,6 +100,31 @@ void compareFunctionUpDownEnemy(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, voi
 	}
 }
 
+
+void compareFunctionFollowX(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction)(SPACESHIP *, int, unsigned char, SCREEN *)){
+	float *d = NULL;
+
+	d = normalizedDistance(sp->x, sp->y, enemy->x, enemy->y);
+
+	// padrão de movimentação que segue o player no eixo x
+
+	if (d[0] > EPSILON){
+		positionFunction(sp, 1, 1, sc);
+	}
+	else if (d[0] < -EPSILON){
+		positionFunction(sp, 1, 0, sc);
+	}
+	else {
+		if (d[1] > EPSILON){
+			positionFunction(sp, 1, 3, sc);
+		}
+		else if (d[1] < -EPSILON){
+			positionFunction(sp, 1, 2, sc);
+		}
+	}
+	
+}
+
 void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction) (SPACESHIP*, int, unsigned char, SCREEN*), void (*comparisonFunction) (SPACESHIP*, SPACESHIP*, SCREEN*, void (*positionFunction)(SPACESHIP*, int, unsigned char, SCREEN*))){
 
 	comparisonFunction(sp, enemy, sc, positionFunction);	

@@ -53,10 +53,18 @@ void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy){
 
 void enemiesShoot(ENEMIES* head, SCREEN* sc){
 	if (!head) return;
+	int random = 0;
 
 	ENEMIES* temp = head;
 	while (temp->next != NULL){
-		if (rand() % 100 < 10){
+		// define a dificuldade do inimigo
+		if (temp->movement_pattern == FOLLOW_X)
+			random = rand() % 50;
+		else random = rand() % 100;
+
+		if (random < 10){
+			if (temp->movement_pattern == FOLLOW_X)
+				shotGun(temp->closerEnemy->x, temp->closerEnemy->y, temp->closerEnemy->y-temp->closerEnemy->side/2 > sc->max_y/2 ? 3 : 2, temp->closerEnemy->gun);
 			shotGun(temp->closerEnemy->x, temp->closerEnemy->y, 1, temp->closerEnemy->gun);
 		}
 		temp = temp->next;
@@ -189,6 +197,7 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 				break;
 
 			case FOLLOW_X:
+				updateSpaceshipPosition(temp->closerEnemy, sp, sc, moveEnemySpaceship, compareFunctionFollowX);
 				break;
 
 			case FOLLOW_ALL:
@@ -200,7 +209,6 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 
 
 		if (temp->closerEnemy->x == -temp->closerEnemy->side || temp->closerEnemy->health <= 0) {
-			printf("Removendo inimigo\n");
             removeFromEnemyList(head, temp->closerEnemy);
             temp = *head;  
         } else {
@@ -213,17 +221,16 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 ENEMIES* createEnemyList(SCREEN* sc){
 	ENEMIES* head = NULL;
 
-	// for (int i = 0; i < NUMBER_OF_ENEMIES; i++){
-	// 	int randomX = rand() % (sc->max_x + 1);
-	// 	int randomY = rand() % (sc->max_y + 1);
-
-	// 	SPACESHIP* enemy = createSpaceship(randomX, randomY, 1, "./sprites/spaceships/player/ship_1/");
-	// 	if (!enemy) {return NULL;};
-		
-	// 	insertIntoEnemyList(&head, enemy);
-	// }
-
 	return head;
+}
+
+int noneWithType(ENEMIES* head, MOVEMENT_PATTERN type){
+	ENEMIES* temp = head;
+	while (temp != NULL){
+		if (temp->movement_pattern == type) return 0;
+		temp = temp->next;
+	}
+	return 1;
 }
 
 //adicionar enemy type
@@ -237,7 +244,7 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer){
 	// Quantos segundos se passaram desde o início do jogo
 	long int seconds = al_get_timer_count(timer)/30;
 
-	if (rand() % 150 < 5){
+	if (rand() % 170 + 1 < 5){
 		randomY = minY + (rand() % (maxY - minY + 1));
 		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/enemy/special-04/");
 
@@ -247,7 +254,7 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer){
 		insertIntoEnemyList(head, enemy, LINEAR);
 	}
 
-	else if (rand() % 150 < 2 && seconds > 15){
+	else if (rand() % 170 + 1 < 2&& seconds > 15){
 		randomY = minY + (rand() % (maxY - minY + 1));
 		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/player/ship_2/");
 		updateJoystickUp(enemy->control);
@@ -256,6 +263,16 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer){
 		if (!enemy) {return;};
 		
 		insertIntoEnemyList(head, enemy, UP_DOWN);
+	}
+
+	else if (rand() % 170 + 1 < 2 && seconds > 20 && noneWithType(*head, FOLLOW_X)){
+		randomY = minY + (rand() % (maxY - minY + 1));
+		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/player/ship_3/");
+		updateJoystickUp(enemy->control);
+
+		if (!enemy) {return;};
+
+		insertIntoEnemyList(head, enemy, FOLLOW_X);
 	}
 }
 

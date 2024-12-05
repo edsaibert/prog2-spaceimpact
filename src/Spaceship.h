@@ -35,6 +35,8 @@ void compareFunctionPlayer(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*p
 
 void compareFunctionUpDownEnemy(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction)(SPACESHIP *, int, unsigned char, SCREEN *));
 
+void compareFunctionFollowX(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction)(SPACESHIP *, int, unsigned char, SCREEN *));
+
 void updateSpaceshipPosition(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction) (SPACESHIP*, int, unsigned char, SCREEN*), void (*comparisonFunction) (SPACESHIP*, SPACESHIP*, SCREEN*, void (*positionFunction)(SPACESHIP*, int, unsigned char, SCREEN*)));
 
 void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREEN* screen);
