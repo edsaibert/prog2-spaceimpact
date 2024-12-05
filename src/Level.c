@@ -47,7 +47,7 @@ int loadLevel(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* 
     drawHealthShieldAndScore(game->sp, game->sc, font);
 
     if (game->currentLevel == FIRST && game->sp->score >= 50){
-        changeBackground(game->bg, "./sprites/background/last/foreground.png", "./sprites/background/last/background.png", NULL);
+        changeBackground(game->bg, "./sprites/background/last/foreground.png", "./sprites/background/last/background.png", "./sprites/background/last/middleground.png");
         game->currentLevel = LAST;
     }
 

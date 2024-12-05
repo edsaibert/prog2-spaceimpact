@@ -22,7 +22,7 @@ int main(void){
     ALLEGRO_TIMER* timer = al_create_timer(FPS);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
 
-	SCREEN* sc = createScreen(500, 300);
+	SCREEN* sc = createScreen(800, 400);
 
     ALLEGRO_DISPLAY* disp = al_create_display(sc->max_x, sc->max_y);
 
@@ -76,37 +76,6 @@ int main(void){
 
 				loadLevel(game, timer, font, enemyCollision, &thunder);
 
-				// addEnemy(&enemies, sc, timer);
-				// addItem(&items, sc, timer);
-
-				// updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship, compareFunctionPlayer);	
-
-				// // Verifica colisão com inimigos e atualiza a posição dos inimigos
-				// enemyCollision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);
-				// checkCollisionFromItem(&items, sp);
-
-				// enemiesShoot(enemies, sc);
-				// shootSpaceship(sp);
-
-				// if (sp->gun->isLightning) thunder = 30 * 3;
-
-				// hitPlayer(&enemies, sp, sc);
-				// //bulletCollisionFromEnemies
-				// //bulletColisionFromSpaceship
-
-				// updateScreenForBullet(&(sp->gun->shots), sc);	
-				// updateScreenForEnemies(&enemies, sp, sc);
-				// updateScreenForBackground(bg);
-
-				// //collision = checkCollisionFromBullets(enemyBullets, sp->x, sp->y, sp->side);
-
-				// drawBackground(bg, sc);
-				// drawItem(items);
-				// drawSpaceship(sp);
-				// drawEnemies(enemies);
-				// drawEnemyBullets(enemies);
-				// drawBullet(sp->gun->shots);
-				// drawHealthShieldAndScore(sp, sc, font);
 			}
 			else {
 				updateScreenForBackground(bg_end);
