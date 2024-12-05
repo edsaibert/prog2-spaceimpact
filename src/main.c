@@ -7,6 +7,7 @@
 #include "Background.h"
 #include "Item.h"
 #include "Uid.h"
+#include "Level.h"
 
 int main(void){
     al_init();
@@ -47,6 +48,8 @@ int main(void){
 	ENEMIES* enemies = createEnemyList(sc); 
 	ITEM* items = NULL;
 
+	LEVEL* game = beginGame(sp, enemies, sc, items, bg);
+
 	int thunder = 0;
 
 	int end = 0;
@@ -71,37 +74,39 @@ int main(void){
 					continue;
 				}
 
-				addEnemy(&enemies, sc, timer);
-				addItem(&items, sc, timer);
+				loadLevel(game, timer, font, enemyCollision, &thunder);
 
-				updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship, compareFunctionPlayer);	
+				// addEnemy(&enemies, sc, timer);
+				// addItem(&items, sc, timer);
 
-				// Verifica colisão com inimigos e atualiza a posição dos inimigos
-				enemyCollision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);
-				checkCollisionFromItem(&items, sp);
+				// updateSpaceshipPosition(sp, enemyCollision, sc, moveSpaceship, compareFunctionPlayer);	
 
-				enemiesShoot(enemies, sc);
-				shootSpaceship(sp);
+				// // Verifica colisão com inimigos e atualiza a posição dos inimigos
+				// enemyCollision = checkCollisionFromEnemies(enemies, sp->x, sp->y, sp->side);
+				// checkCollisionFromItem(&items, sp);
 
-				if (sp->gun->isLightning) thunder = 30 * 3;
+				// enemiesShoot(enemies, sc);
+				// shootSpaceship(sp);
 
-				hitPlayer(&enemies, sp, sc);
-				//bulletCollisionFromEnemies
-				//bulletColisionFromSpaceship
+				// if (sp->gun->isLightning) thunder = 30 * 3;
 
-				updateScreenForBullet(&(sp->gun->shots), sc);	
-				updateScreenForEnemies(&enemies, sp, sc);
-				updateScreenForBackground(bg);
+				// hitPlayer(&enemies, sp, sc);
+				// //bulletCollisionFromEnemies
+				// //bulletColisionFromSpaceship
 
-				//collision = checkCollisionFromBullets(enemyBullets, sp->x, sp->y, sp->side);
+				// updateScreenForBullet(&(sp->gun->shots), sc);	
+				// updateScreenForEnemies(&enemies, sp, sc);
+				// updateScreenForBackground(bg);
 
-				drawBackground(bg, sc);
-				drawItem(items);
-				drawSpaceship(sp);
-				drawEnemies(enemies);
-				drawEnemyBullets(enemies);
-				drawBullet(sp->gun->shots);
-				drawHealthShieldAndScore(sp, sc, font);
+				// //collision = checkCollisionFromBullets(enemyBullets, sp->x, sp->y, sp->side);
+
+				// drawBackground(bg, sc);
+				// drawItem(items);
+				// drawSpaceship(sp);
+				// drawEnemies(enemies);
+				// drawEnemyBullets(enemies);
+				// drawBullet(sp->gun->shots);
+				// drawHealthShieldAndScore(sp, sc, font);
 			}
 			else {
 				updateScreenForBackground(bg_end);

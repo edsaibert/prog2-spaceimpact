@@ -14,4 +14,11 @@
 #define FPS 1.0/30.0
 #define EPSILON 1/(SPACESHIP_SIDE + SPACESHIP_STEP)
 
+typedef enum {
+    FIRST,
+    FIRST_BOSS,
+    LAST,
+    LAST_BOSS
+} LEVEL_ID;
+
 #endif

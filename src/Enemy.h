@@ -42,7 +42,7 @@ void enemiesShoot(ENEMIES* head, SCREEN* sc);
 
 void drawEnemyBullets(ENEMIES* head);
 
-void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer);
+void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer, LEVEL_ID currentLevel);
 
 void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy);
 
