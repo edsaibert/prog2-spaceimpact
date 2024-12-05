@@ -10,7 +10,7 @@ typedef enum {
 	LINEAR,
 	UP_DOWN,
 	FOLLOW_X,
-	RANDOM,
+	DOWN,
 	FOLLOW_ALL
 } MOVEMENT_PATTERN;
 

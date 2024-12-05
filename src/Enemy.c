@@ -65,6 +65,12 @@ void enemiesShoot(ENEMIES* head, SCREEN* sc){
 		if (random < 10){
 			if (temp->movement_pattern == FOLLOW_X)
 				shotGun(temp->closerEnemy->x, temp->closerEnemy->y, temp->closerEnemy->y-temp->closerEnemy->side/2 > sc->max_y/2 ? 3 : 2, temp->closerEnemy->gun);
+
+			if (temp->movement_pattern == DOWN){
+				shotGun(temp->closerEnemy->x, temp->closerEnemy->y, 2, temp->closerEnemy->gun);
+				shotGun(temp->closerEnemy->x, temp->closerEnemy->y, 3, temp->closerEnemy->gun);
+
+			}
 			shotGun(temp->closerEnemy->x, temp->closerEnemy->y, 1, temp->closerEnemy->gun);
 		}
 		temp = temp->next;
@@ -124,7 +130,6 @@ void hitPlayer(ENEMIES** enemies, SPACESHIP* sp, SCREEN* sc) {
 }
 
 void moveEnemySpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREEN* sc){
-
 	if (!trajectory){
 		sp->sprite->active = sp->sprite->front;
 			// Movimentação para a esquerda
@@ -157,20 +162,6 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 
 		updateScreenForBullet(&(temp->closerEnemy->gun->shots), sc);
 
-		/*
-		if (!(sp->x + sp->side / 2 == temp->closerEnemy->x - temp->closerEnemy->side / 2 &&
-			  sp->y + sp->side / 2 >= temp->closerEnemy->y - temp->closerEnemy->side / 2 &&
-			  sp->y - sp->side / 2 <= temp->closerEnemy->y + temp->closerEnemy->side / 2))
-		{
-			temp->closerEnemy->sprite->active = temp->closerEnemy->sprite->front;
-
-			if (temp->closerEnemy->x - SPACESHIP_STEP >= -temp->closerEnemy->side)
-				temp->closerEnemy->x -= SPACESHIP_STEP;
-			else
-				temp->closerEnemy->x = -temp->closerEnemy->side;
-		}
-		*/
-
 		switch (temp->movement_pattern){
 			case LINEAR:
 				temp->closerEnemy->control->left = 1;
@@ -184,10 +175,8 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 				if (temp->closerEnemy->y > temp->originY + 10){
 					temp->closerEnemy->control->up = 1;
 					temp->closerEnemy->control->down = 0;
-					// updateJoystickUp(temp->closerEnemy->control);
 				}
 				else if (temp->closerEnemy->y <= temp->originY - 10){
-					// updateJoystickDown(temp->closerEnemy->control);
 					temp->closerEnemy->control->up = 0;
 					temp->closerEnemy->control->down = 1;
 				}
@@ -203,12 +192,22 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 			case FOLLOW_ALL:
 				break;
 
-			case RANDOM:
+			case DOWN:
+				// Pode parar em um y qualquer da tela e continuar atirando no player
+				if (rand() % 120 == 0 && temp->closerEnemy->y >= SPACESHIP_SIDE && temp->closerEnemy->y <= sc->max_y - SPACESHIP_SIDE){
+					temp->closerEnemy->control->down = 0;
+					temp->closerEnemy->control->up = 1;
+					break;
+				}
+
+				temp->closerEnemy->control->down = 1;
+				updateSpaceshipPosition(temp->closerEnemy, sp, sc, moveEnemySpaceship, compareFunctionUpDownEnemy);
+
 				break;
 		}
 
 
-		if (temp->closerEnemy->x == -temp->closerEnemy->side || temp->closerEnemy->health <= 0) {
+		if (temp->closerEnemy->x == -temp->closerEnemy->side || temp->closerEnemy->y == sc->max_y + temp->closerEnemy->side || temp->closerEnemy->health <= 0) {
             removeFromEnemyList(head, temp->closerEnemy);
             temp = *head;  
         } else {
@@ -267,12 +266,20 @@ void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer){
 
 	else if (rand() % 170 + 1 < 2 && seconds > 20 && noneWithType(*head, FOLLOW_X)){
 		randomY = minY + (rand() % (maxY - minY + 1));
-		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 3, "./sprites/spaceships/player/ship_3/");
+		enemy = createSpaceship(sc->max_x + SPACESHIP_SIDE, randomY, 1, 5, "./sprites/spaceships/player/ship_3/");
 		updateJoystickUp(enemy->control);
 
 		if (!enemy) {return;};
 
 		insertIntoEnemyList(head, enemy, FOLLOW_X);
+	}
+
+	if (*head == NULL){
+		for (int i = 2 * SPACESHIP_SIDE; i < sc->max_x-SPACESHIP_SIDE; i += 100){
+			enemy = createSpaceship(i, -SPACESHIP_SIDE, 1, 5, "./sprites/spaceships/enemy/special-02/");
+			if (!enemy) {return;};
+			insertIntoEnemyList(head, enemy, DOWN);
+		}
 	}
 }
 
