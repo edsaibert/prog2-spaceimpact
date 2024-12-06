@@ -1,6 +1,7 @@
 #include "../main.h"
 #include "Position.h"
 #include "Enemy.h"
+#include "Gun.h"
 
 typedef struct boss {
     SPACESHIP* sp;
@@ -17,6 +18,8 @@ BOSS* addBoss(int x, int y, int side, int health, MOVEMENT_PATTERN movement_patt
 void hitPlayerBoss(BOSS** boss, SPACESHIP* sp, SCREEN* sc);
 
 void destroyBoss(BOSS* boss);
+
+void bossShoot(LEVEL_ID level, BOSS* boss, SCREEN* sc);
 
 void updateScreenForBoss(BOSS** boss, ALLEGRO_TIMER* timer, SPACESHIP* sp, SCREEN* sc);
 

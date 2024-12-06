@@ -67,6 +67,10 @@ void loadFirstBoss(LEVEL* game, BOSS** boss, ALLEGRO_TIMER* timer, ALLEGRO_FONT*
 	hitPlayerBoss(boss, game->sp, game->sc);
 
 	drawBossHealth((*boss)->sp, game->sc, font, "");
+	bossShoot(game->currentLevel, (*boss), game->sc);
+
+	updateScreenForBullet(&((*boss)->sp->gun->shots), game->sc);
+	drawBullet((*boss)->sp->gun->shots);
 	drawSpaceship((*boss)->sp);
 
 	if (checkIfSpaceshipIsDead((*boss)->sp)){

@@ -18,7 +18,7 @@ BULLET* createBulletNode(int x, int y, unsigned char trajectory, BULLET_TYPE bul
 	}
 	else if (bulletType == SPECIAL_MINOR_FIRST){
 		node->side = 20;
-		node->sprite = al_load_bitmap("./sprite/others/fireball.png");
+		node->sprite = al_load_bitmap("./sprites/others/fireball.png");
 	}
 	else {
 		node->side = 10;
@@ -94,10 +94,12 @@ int checkCollisionFromBullet(BULLET** head, int x, int y, int side) {
 				case SPECIAL:
 					damage += 3;
 					break;
-				case SPECIAL_MINOR_FIRST || SPECIAL_MINOR_LAST:
+				case SPECIAL_MINOR_FIRST: 
+				case SPECIAL_MINOR_LAST:
 					damage += 5;
 					break;
-				case SPECIAL_MAJOR_FIRST || SPECIAL_MAJOR_LAST:
+				case SPECIAL_MAJOR_FIRST:
+				case SPECIAL_MAJOR_LAST:
 					damage += 10;
 					break;
 				default:

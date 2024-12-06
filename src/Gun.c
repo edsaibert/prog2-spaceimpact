@@ -16,11 +16,11 @@ GUN* createGun(){
 }
 
 void shotGunBoss(LEVEL_ID level, int x, int y, unsigned char trajectory, GUN* gun){
-	if (!gun) return NULL;
+	if (!gun) return;
 
 	if (gun->timer > 0){
 		gun->timer -= 1;
-		return NULL;
+		return;
 	}
 
 	if (level == FIRST_BOSS){
@@ -32,6 +32,9 @@ void shotGunBoss(LEVEL_ID level, int x, int y, unsigned char trajectory, GUN* gu
 			insertIntoBulletList(&(gun->shots), x, y, trajectory, SPECIAL_MAJOR_FIRST);
 			gun->specialMajor--;
 		}
+		else {
+			insertIntoBulletList(&(gun->shots), x, y, trajectory, SIMPLE);
+		}
 	}
 	else if (level == LAST_BOSS){
 		if (gun->specialMinor){
@@ -41,6 +44,9 @@ void shotGunBoss(LEVEL_ID level, int x, int y, unsigned char trajectory, GUN* gu
 		else if (gun->specialMajor){
 			insertIntoBulletList(&(gun->shots), x, y, trajectory, SPECIAL_MAJOR_LAST);
 			gun->specialMajor--;
+		}
+		else {
+			insertIntoBulletList(&(gun->shots), x, y, trajectory, SIMPLE);
 		}
 	}
 }
