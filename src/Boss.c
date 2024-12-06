@@ -9,7 +9,7 @@ BOSS* addBoss(int x, int y, int side, int health, MOVEMENT_PATTERN movement_patt
 
 	b->sp = boss;
 	b->originX = sc->max_x - 200;
-	b->originY = sc->max_y / 2 + 40;
+	b->originY = sc->max_y / 2;
 	b->movement_pattern = movement_pattern;
 	b->currentLevel = currentLevel;
 
@@ -25,8 +25,7 @@ void updateScreenForBoss(BOSS** boss, SPACESHIP* sp, SCREEN* sc){
 		case LINEAR:
 
 			// LINEAR: BOSS VOLTA PARA A ORIGEM
-			if (temp->sp->x == temp->originX && temp->sp->y == temp->originY){
-				printf("Updating Boss: x=%d, y=%d\n", temp->sp->x, temp->sp->y);
+			if (abs(temp->sp->x - temp->originX < temp->sp->side/2) && abs(temp->sp->y - temp->originY) < temp->sp->side/2){
 				temp->movement_pattern = DODGE;
 				break;
 
@@ -50,7 +49,7 @@ void updateScreenForBoss(BOSS** boss, SPACESHIP* sp, SCREEN* sc){
 				temp->sp->control->down = 1;
 			}
 
-			updateSpaceshipPosition((*temp)->sp, sp, sc, moveEnemySpaceship, compareFunctionUpDownEnemy);
+			updateSpaceshipPosition(temp->sp, sp, sc, moveEnemySpaceship, compareFunctionUpDownEnemy);
 
 			break;
 		case FOLLOW_X:
