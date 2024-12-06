@@ -2,9 +2,18 @@
 #include "Position.h"
 #include "Enemy.h"
 
-void addBoss(ENEMIES** head, int x, int y, int side, int health, MOVEMENT_PATTERN movement_pattern, const char* path);
+typedef struct boss {
+    SPACESHIP* sp;
+    int originX;
+    int originY;
+    MOVEMENT_PATTERN movement_pattern;
+    LEVEL_ID currentLevel;
 
-void updateScreenForBoss(ENEMIES** head, SPACESHIP* sp, SCREEN* sc);
+} BOSS;
 
-void doRoutineBoss(ENEMIES* head);
+BOSS* addBoss(int x, int y, int side, int health, MOVEMENT_PATTERN movement_pattern, LEVEL_ID currentLevel, const char* path, SCREEN* sc);
+
+void updateScreenForBoss(BOSS** boss, SPACESHIP* sp, SCREEN* sc);
+
+void doRoutineBoss(BOSS* boss);
 

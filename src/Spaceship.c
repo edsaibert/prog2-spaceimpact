@@ -206,6 +206,12 @@ void drawSpaceship(SPACESHIP* sp) {
     float angleEnemy = 3.0f * ALLEGRO_PI / 2.0f;
 	float angle = ALLEGRO_PI / 2.0f;
 
+	float original_width = al_get_bitmap_width(sp->sprite->active);
+	float original_height = al_get_bitmap_height(sp->sprite->active);
+
+	float xscale = sp->side / SPACESHIP_SIDE;
+	float yscale = sp->side / SPACESHIP_SIDE;
+
 	if (sp->shield){
 		al_draw_filled_circle(
 		sp->x, sp->y,
@@ -215,20 +221,22 @@ void drawSpaceship(SPACESHIP* sp) {
 	}
 
 	if (sp->enemy){
-		al_draw_rotated_bitmap(
+		al_draw_scaled_rotated_bitmap(
 				sp->sprite->active,  
 				cx, cy,             
 				sp->x, sp->y,      
+				xscale, yscale,
 				angleEnemy,            
 				0                
     	);
 
 	}
     else {
-		al_draw_rotated_bitmap(
+		al_draw_scaled_rotated_bitmap(
 				sp->sprite->active,  
 				cx, cy,             
 				sp->x, sp->y,      
+				xscale, yscale,
 				angle,            
 				0                
     	);

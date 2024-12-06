@@ -18,11 +18,10 @@ LEVEL* beginGame(SPACESHIP* sp, ENEMIES* enemies, SCREEN* sc, ITEM* items, BACKG
 
 int loadLevel(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* enemyCollision, int *thunder){
    
-	if (game->currentLevel == FIRST && game->currentLevel == LAST){
+	if (game->currentLevel == FIRST || game->currentLevel == LAST){
 		addEnemy(&(game->enemies), game->sc, timer, game->currentLevel);
-		addItem(&(game->items), game->sc, timer);
-
 	}
+	addItem(&(game->items), game->sc, timer);
 	updateSpaceshipPosition(game->sp, enemyCollision, game->sc, moveSpaceship, compareFunctionPlayer);	
 
 	// Verifica colisão com inimigos e atualiza a posição dos inimigos
@@ -37,8 +36,8 @@ int loadLevel(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* 
 	hitPlayer(&(game->enemies), game->sp, game->sc);
 
 	updateScreenForBullet(&(game->sp->gun->shots), game->sc);	
-	updateScreenForEnemies(&(game->enemies), game->sp, game->sc);
 	updateScreenForBackground(game->bg);
+	updateScreenForEnemies(&(game->enemies), game->sp, game->sc);
 
 	drawBackground(game->bg, game->sc);
 	drawItem(game->items);
@@ -48,22 +47,16 @@ int loadLevel(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* 
 	drawBullet(game->sp->gun->shots);
 	drawHealthShieldAndScore(game->sp, game->sc, font);	
 
-    if (game->currentLevel == FIRST && game->sp->score >= 50){
+    if (game->currentLevel == FIRST && game->sp->score >= 10){
         //changeBackground(game->bg, "./sprites/background/last/foreground.png", "./sprites/background/last/background.png", "./sprites/background/last/middleground.png");
         //game->currentLevel = LAST;
 		game->currentLevel = FIRST_BOSS;
-		if (game->enemies == NULL){
-			addBoss(&(game->enemies), game->sc->max_x + 40, game->sc->max_y/2 + 40, 80, 80, LINEAR, "./sprites/spaceships/enemy/boss-01/");
-
-	    }
-
-	if (game->currentLevel == FIRST_BOSS{
-		loadFirstBoss(game, timer, font, enemyCollision, thunder);
 	}
-	
+
     return 1;
 }
 
-void loadFirstBoss(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* enemyCollision, int *thunder){
-	updateScreenForBoss(&(game->enemies), game->sp, game->sc);	
+void loadFirstBoss(LEVEL* game, BOSS** boss, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* enemyCollision, int *thunder){
+	updateScreenForBoss(boss, game->sp, game->sc);	
+	drawSpaceship((*boss)->sp);
 }

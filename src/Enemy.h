@@ -37,9 +37,13 @@ void drawEnemyBullets(ENEMIES* head);
 
 void addEnemy(ENEMIES** head, SCREEN* sc, ALLEGRO_TIMER *timer, LEVEL_ID currentLevel);
 
+int countEnemies(ENEMIES* enemies);
+
 void removeFromEnemyList(ENEMIES** head, SPACESHIP* enemy);
 
 void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc);
+
+void moveEnemySpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREEN* sc);
 
 void drawEnemies(ENEMIES* enemies);
 
