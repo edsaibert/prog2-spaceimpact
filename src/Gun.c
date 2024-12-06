@@ -9,8 +9,40 @@ GUN* createGun(){
 	gun->timer = 0;
 	gun->specialAttack = 0;
 	gun->isLightning = 0;
+	gun->specialMinor = 0;
+	gun->specialMajor = 0;
 	
 	return gun;
+}
+
+void shotGunBoss(LEVEL_ID level, int x, int y, unsigned char trajectory, GUN* gun){
+	if (!gun) return NULL;
+
+	if (gun->timer > 0){
+		gun->timer -= 1;
+		return NULL;
+	}
+
+	if (level == FIRST_BOSS){
+		if (gun->specialMinor){
+			insertIntoBulletList(&(gun->shots), x, y, trajectory, SPECIAL_MINOR_FIRST);
+			gun->specialMinor--;
+		}
+		else if (gun->specialMajor){
+			insertIntoBulletList(&(gun->shots), x, y, trajectory, SPECIAL_MAJOR_FIRST);
+			gun->specialMajor--;
+		}
+	}
+	else if (level == LAST_BOSS){
+		if (gun->specialMinor){
+			insertIntoBulletList(&(gun->shots), x, y, trajectory, SPECIAL_MINOR_LAST);
+			gun->specialMinor--;
+		}
+		else if (gun->specialMajor){
+			insertIntoBulletList(&(gun->shots), x, y, trajectory, SPECIAL_MAJOR_LAST);
+			gun->specialMajor--;
+		}
+	}
 }
 
 BULLET* shotGun (int x, int y, unsigned char trajectory, GUN* gun) {

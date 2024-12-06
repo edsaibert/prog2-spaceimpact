@@ -13,6 +13,10 @@ typedef struct gun {
 	unsigned char timer;
 	int specialAttack;
 	int isLightning;
+	
+	// BOSSES
+	int specialMinor;
+	int specialMajor;
 
 	BULLET *shots;
 } GUN;
@@ -21,6 +25,7 @@ GUN* createGun();
 
 BULLET* shotGun(int x, int y, unsigned char trajectory, GUN* gun);
 
+void shotGunBoss(LEVEL_ID level, int x, int y, unsigned char trajectory, GUN* gun);
 
 void destroyGun(GUN* gun);
 

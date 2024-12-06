@@ -9,8 +9,13 @@
 
 typedef enum {
 	SIMPLE,
+	THUNDER,
 	SPECIAL,
-	THUNDER	
+	//bosses
+	SPECIAL_MINOR_FIRST,
+	SPECIAL_MAJOR_FIRST,
+	SPECIAL_MAJOR_LAST,
+	SPECIAL_MINOR_LAST
 } BULLET_TYPE;
 
 typedef struct bullet {

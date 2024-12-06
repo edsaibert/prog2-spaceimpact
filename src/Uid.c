@@ -15,3 +15,8 @@ void drawHealthShieldAndScore(SPACESHIP* sp, SCREEN* sc, ALLEGRO_FONT* font){
     snprintf(text, sizeof(text), "Score: %d", sp->score);
     al_draw_text(font, al_map_rgb(255, 255, 255), 10, 50, 0, text);
 }
+
+void drawBossHealth(SPACESHIP* sp, SCREEN* sc, ALLEGRO_FONT* font, const char* bossName){
+    al_draw_filled_rounded_rectangle(sc->max_x - 400 - 10, 9, sc->max_x -9, 21, 5, 5, al_map_rgb(255, 255, 255));
+    al_draw_filled_rounded_rectangle(sc->max_x - (5*sp->health) - 9, 10, sc->max_x - 10, 20, 5, 5, al_map_rgb(105, 22, 25));
+}

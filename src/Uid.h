@@ -6,4 +6,6 @@
 
 void drawHealthShieldAndScore(SPACESHIP* sp, SCREEN* sc, ALLEGRO_FONT* font);
 
+void drawBossHealth(SPACESHIP* sp, SCREEN* sc, ALLEGRO_FONT* font, const char* bossName);
+
 #endif

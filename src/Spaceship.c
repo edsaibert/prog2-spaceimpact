@@ -27,28 +27,28 @@ void moveSpaceship(SPACESHIP* sp, int stepCount, unsigned char trajectory, SCREE
 		sp->sprite->active = sp->sprite->front;
 		if (sp->x - stepCount*SPACESHIP_STEP - sp->side/2 >= 0)
 			// Movimentação para a esquerda
-			sp->x = sp->x - stepCount*(SPACESHIP_STEP+2);
+			sp->x = sp->x - stepCount*(SPACESHIP_STEP+4);
 		else sp->x = sp->side/2;
 	}
 	else if (trajectory == 1) {
 		sp->sprite->active = sp->sprite->front;	
 		if (sp->x + stepCount*SPACESHIP_STEP + sp->side/2 <= sc->max_x)
 			// Movimentação para a direita
-			sp->x = sp->x + stepCount*(SPACESHIP_STEP+2);
+			sp->x = sp->x + stepCount*(SPACESHIP_STEP+4);
 		else sp->x = sc->max_x - sp->side/2;
 	}
 	else if (trajectory == 2) {
 		sp->sprite->active = sp->sprite->left;
 		if (sp->y - stepCount*SPACESHIP_STEP - sp->side/2 >= 0)
 			// Movimentação para cima
-			sp->y = sp->y - stepCount*(SPACESHIP_STEP+2);
+			sp->y = sp->y - stepCount*(SPACESHIP_STEP+4);
 		else sp->y = sp->side/2;
 	}
 	else if (trajectory == 3) {
 		sp->sprite->active = sp->sprite->right;
 		if (sp->y + stepCount*SPACESHIP_STEP + sp->side/2 <= sc->max_y)
 			// Movimentação para baixo
-			sp->y = sp->y + stepCount*(SPACESHIP_STEP+2);
+			sp->y = sp->y + stepCount*(SPACESHIP_STEP+4);
 		else sp->y = sc->max_y - sp->side/2;
 	}
 }
@@ -172,20 +172,7 @@ void hitSpaceship(SPACESHIP* sp, int damage){
 
 void shootSpaceship(SPACESHIP* sp){
 	if (!sp) return;
-	
-	// if (sp->control->shoot && sp->control->left)
-	// 	shotGun(sp->x, sp->y, 1, sp->gun); 
 
-	// else if (sp->control->shoot && sp->control->right)
-	// 	shotGun(sp->x, sp->y, 0, sp->gun);
-
-	// else if (sp->control->shoot && sp->control->up)
-	// 	shotGun(sp->x, sp->y, 3, sp->gun);
-
-	// else if (sp->control->shoot && sp->control->down)	
-	// 	shotGun(sp->x, sp->y, 2, sp->gun);
-
-	// else if (sp->control->shoot) shotGun(sp->x, sp->y, 0, sp->gun); // A nave está parada
 	if (sp->control->shoot) shotGun(sp->x, sp->y, 0, sp->gun); // A nave está parada
 
 }

@@ -48,7 +48,7 @@ int main(void){
 	ENEMIES* enemies = createEnemyList(sc); 
 	ITEM* items = NULL;
 
-	BOSS* firstBoss = addBoss(sc->max_x + 150/2, sc->max_y / 2, 80, 150, LINEAR, FIRST_BOSS, "./sprites/spaceships/enemy/boss-01/", sc);
+	BOSS* firstBoss = addBoss(sc->max_x + 80/2, sc->max_y / 2, 80, 80, LINEAR, FIRST_BOSS, "./sprites/spaceships/enemy/boss-01/", sc);
 	BOSS* lastBoss = NULL;
 
 	LEVEL* game = beginGame(sp, enemies, sc, items, bg);
@@ -76,7 +76,7 @@ int main(void){
 
 					continue;
 				}
-
+				
 				loadLevel(game, timer, font, enemyCollision, &thunder);
 
 				if (game->currentLevel == FIRST_BOSS && countEnemies(game->enemies) == 0)
