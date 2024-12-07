@@ -15,10 +15,13 @@
 #define EPSILON 1/(SPACESHIP_SIDE + SPACESHIP_STEP)
 
 typedef enum {
+	BEGIN_FIRST,
     FIRST,
     FIRST_BOSS,
+	END_FIRST_BOSS,
     LAST,
-    LAST_BOSS
+    LAST_BOSS,
+	END_LAST_BOSS
 } LEVEL_ID;
 
 typedef enum {

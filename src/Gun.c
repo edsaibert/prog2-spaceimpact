@@ -26,11 +26,9 @@ void shotGunBoss(LEVEL_ID level, int x, int y, unsigned char trajectory, GUN* gu
 	if (level == FIRST_BOSS){
 		if (gun->specialMinor){
 			insertIntoBulletList(&(gun->shots), x, y, trajectory, SPECIAL_MINOR_FIRST);
-			gun->specialMinor--;
 		}
 		else if (gun->specialMajor){
 			insertIntoBulletList(&(gun->shots), x, y, trajectory, SPECIAL_MAJOR_FIRST);
-			gun->specialMajor--;
 		}
 		else {
 			insertIntoBulletList(&(gun->shots), x, y, trajectory, SIMPLE);

@@ -39,6 +39,20 @@ void hitPlayerBoss(BOSS** boss, SPACESHIP* sp, SCREEN* sc){
 
 void bossShoot(LEVEL_ID level, BOSS* boss, SCREEN* sc){
 
+	if (boss->sp->gun->specialMajor && level == FIRST_BOSS){
+		if ((rand() % 50 + 1) == 1)
+			shotGunBoss(boss->currentLevel, boss->sp->x, boss->sp->y, 1, boss->sp->gun);
+		return;
+	}
+
+	if (boss->sp->gun->specialMajor && level == LAST_BOSS){
+		
+		for (int i = 10; i < sc->max_x - 10; i+=10){
+			if ((rand() % 180 + 1) == 1)
+				shotGunBoss(boss->currentLevel, i, -10, 2, boss->sp->gun);
+		}
+	}
+
 	if ((rand() % 150 + 1) < 5)
 		shotGunBoss(boss->currentLevel, boss->sp->x, boss->sp->y, 1, boss->sp->gun);
 
@@ -104,7 +118,7 @@ void updateScreenForBoss(BOSS** boss, ALLEGRO_TIMER* timer, SPACESHIP* sp, SCREE
 
 			// LINEAR: BOSS VOLTA PARA A ORIGEM
 			if (abs(temp->sp->x - temp->originX) < temp->sp->side && abs(temp->sp->y - temp->originY) < temp->sp->side){
-				temp->movement_pattern = DODGE;
+				temp->movement_pattern = FOLLOW_X;
 				printf("linear to dodge");
 				break;
 
@@ -128,37 +142,53 @@ void updateScreenForBoss(BOSS** boss, ALLEGRO_TIMER* timer, SPACESHIP* sp, SCREE
 				temp->sp->control->down = 1;
 			}
 
-			temp->sp->gun->specialMinor = 10;
+			temp->sp->gun->specialMajor = 1;
+			temp->sp->gun->specialMinor = 0;
 			updateSpaceshipPosition(temp->sp, sp, sc, moveBoss, compareFunctionUpDownEnemy);
 
 			break;
 		case FOLLOW_X:
 			if (newTimer % (600) == 0){
-				temp->movement_pattern = SPECIAL_ATTACK;
-			}
+				temp->movement_pattern = DODGE; }
+			temp->sp->gun->specialMajor = 0;
 			updateSpaceshipPosition(temp->sp, sp, sc, moveBoss, compareFunctionFollowX);
 			break;
-		case SPECIAL_ATTACK:
-			if (newTimer % (600) == 0){
-				temp->movement_pattern = LINEAR;
-			}
+		// case SPECIAL_ATTACK:
 
-			if (abs(temp->sp->x - (sc->max_x - 100)) < temp->sp->side && abs(temp->sp->y - (sc->max_y - 200)) < temp->sp->side){
-				// ATAQUE ESPECIAL
+		// 	temp->sp->gun->specialMajor = 10;
+		// 	if (abs(temp->sp->x - (sc->max_x - 100)) < temp->sp->side && abs(temp->sp->y - 200) < temp->sp->side){
+		// 		temp->movement_pattern = DODGE;
+		// 		break;
+		// 	}
+		// 	if (sc->max_x - 100 < temp->sp->x){
+		// 		temp->sp->control->left = 1;
+		// 		temp->sp->control->right = 0;
+		// 	}
+		// 	else if (sc->max_x - 100 > temp->sp->x){
+		// 		temp->sp->control->right = 1;
+		// 		temp->sp->control->left = 0;
+		// 	}
 
-				temp->movement_pattern = DODGE;
-				break;
-			}
-			temp->sp->gun->specialMajor = 10;
+		// 	if ((sc->max_y - 200) < temp->sp->y){
+		// 		temp->sp->control->down = 0;
+		// 		temp->sp->control->up = 1;
+		// 	}
 
-			updateSpaceshipPosition(temp->sp, sp, sc, moveBoss, compareFunctionUpDownEnemy);
+		// 	else if ((sc->max_y - 200) > temp->sp->y){
+		// 		temp->sp->control->up = 0;
+		// 		temp->sp->control->down = 1;
+		// 	}
 
-			break;
+		// 	updateSpaceshipPosition(temp->sp, sp, sc, moveBoss, compareFunctionUpDownEnemy);
+
+		// 	break;
 		case DODGE:
 			updateSpaceshipPosition(temp->sp, sp, sc, moveBoss, compareFunctionDodge);
 			if (newTimer % (600) == 0){
-				temp->movement_pattern = FOLLOW_X;
+				temp->movement_pattern = LINEAR;
 			}
+			
+			temp->sp->gun->specialMinor = 1;
 			break;
 		default:
 			break;

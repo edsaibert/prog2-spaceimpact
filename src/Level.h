@@ -27,13 +27,15 @@ LEVEL* beginGame(SPACESHIP* sp, ENEMIES* enemies, SCREEN* sc, ITEM* items, BACKG
 
 int loadLevel(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* enemyCollision, int* thunder);
 
-void loadFirstBoss(LEVEL* game, BOSS** boss, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* enemyCollision, int *thunder);
+void loadBoss(LEVEL* game, BOSS** boss, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* enemyCollision, int *thunder);
 
-void endFirstBoss(LEVEL* game);
+void showText(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, int* y, LEVEL_ID nextLevel, const char* text);
 
-void loadLastBoss(LEVEL* game);
+void endFirstBoss(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, int* y, const char* text);
 
-void endLastBoss(LEVEL* game);
+// void loadLastBoss(LEVEL* game);
+
+// void endLastBoss(LEVEL* game);
 
 void destroyLevel(LEVEL* game);
 

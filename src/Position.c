@@ -44,9 +44,9 @@ float* normalizedDistance(int x1, int y1, int x2, int y2){
 // Checa a colisão entre objetos utilizando a função da circunferência e distância euclidiana
 short int checkCollision(int x1, int y1, int x2, int y2, int side1, int side2){
 	int euclidianDistance = (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1);
-	euclidianDistance = sqrt(euclidianDistance);
+	// euclidianDistance = sqrt(euclidianDistance);
 
-	if (euclidianDistance <= ((side1/2) + (side2/2))) 
+	if (euclidianDistance <= (((side1 / 2) + (side2 / 2)) * ((side1 / 2) + (side2 / 2)))) 
 		return 1;
 	return 0;
 }

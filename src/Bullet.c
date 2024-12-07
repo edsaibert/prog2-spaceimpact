@@ -18,6 +18,14 @@ BULLET* createBulletNode(int x, int y, unsigned char trajectory, BULLET_TYPE bul
 	}
 	else if (bulletType == SPECIAL_MINOR_FIRST){
 		node->side = 20;
+		node->sprite = al_load_bitmap("./sprites/others/special_attack.png");
+	}
+	else if (bulletType == SPECIAL_MAJOR_LAST){
+		node->side = 20;
+		node->sprite = al_load_bitmap("./sprites/others/bolt.png");
+	}
+	else if (bulletType == SPECIAL_MINOR_LAST){
+		node->side = 20;
 		node->sprite = al_load_bitmap("./sprites/others/fireball.png");
 	}
 	else {
