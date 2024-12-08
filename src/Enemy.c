@@ -204,6 +204,8 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 				updateSpaceshipPosition(temp->closerEnemy, sp, sc, moveEnemySpaceship, compareFunctionUpDownEnemy);
 
 				break;
+			default:
+				break;
 		}
 
 

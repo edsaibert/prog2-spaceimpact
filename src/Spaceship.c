@@ -78,13 +78,9 @@ void compareFunctionPlayer(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*p
 }
 
 void compareFunctionUpDownEnemy(SPACESHIP* sp, SPACESHIP* enemy, SCREEN* sc, void (*positionFunction)(SPACESHIP *, int, unsigned char, SCREEN *)){
-	float* d = NULL;
 	/*
 		Caso tenha tido colisao com um inimigo = enemy != NULL
 	*/
-	if (enemy){
-		d = normalizedDistance(sp->x, sp->y, enemy->x, enemy->y);	
-	}
 
 	if (sp->control->left){
 		positionFunction(sp, 1, 0, sc);
@@ -164,6 +160,10 @@ void hitSpaceship(SPACESHIP* sp, int damage){
 	
 	if (sp->shield) sp->shield -= damage;
 	else sp->health -= damage;
+
+	if (sp->shield <= 0){
+		sp->shield = 0;
+	}
 
 	if (sp->health <= 0){
 		sp->health = 0;

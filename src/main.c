@@ -182,8 +182,10 @@ int main(void)
 	destroyScreen(sc);
 	destroySpaceship(sp);
 	destroyEnemyList(enemies);
+	destroyItemList(items);
 	destroyBackground(bg);
 	destroyBackground(bg_end);
+	free(game);
 	// destroyBoss(firstBoss);
 	// destroyBoss(lastBoss);
 
