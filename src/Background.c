@@ -26,7 +26,7 @@ void changeBackground(BACKGROUND* prev, const char* foreground, const char* back
 	al_destroy_bitmap(prev->foreground);
 	al_destroy_bitmap(prev->background);
 	al_destroy_bitmap(prev->middleground);
-	
+
 	if (foreground) prev->foreground = al_load_bitmap(foreground);
 	else prev->foreground = NULL;
 

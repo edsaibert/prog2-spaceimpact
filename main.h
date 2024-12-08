@@ -21,7 +21,8 @@ typedef enum {
 	END_FIRST_BOSS,
     LAST,
     LAST_BOSS,
-	END_LAST_BOSS
+	END_LAST_BOSS,
+	END
 } LEVEL_ID;
 
 typedef enum {

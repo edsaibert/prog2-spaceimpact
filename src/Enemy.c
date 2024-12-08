@@ -207,7 +207,11 @@ void updateScreenForEnemies(ENEMIES** head, SPACESHIP* sp, SCREEN* sc) {
 		}
 
 
-		if (temp->closerEnemy->x == -temp->closerEnemy->side || temp->closerEnemy->y == sc->max_y + temp->closerEnemy->side || temp->closerEnemy->health <= 0) {
+		if (temp->closerEnemy->x <= -temp->closerEnemy->side || 
+			temp->closerEnemy->x >= sc->max_x + temp->closerEnemy->side ||
+			temp->closerEnemy->y >= sc->max_y + temp->closerEnemy->side || 
+			temp->closerEnemy->y <= -temp->closerEnemy->side ||
+			temp->closerEnemy->health <= 0) {
             removeFromEnemyList(head, temp->closerEnemy);
             temp = *head;  
         } else {

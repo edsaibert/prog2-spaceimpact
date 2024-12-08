@@ -44,13 +44,13 @@ int main(void)
 		return 1;
 
 	BACKGROUND *bg = createBackground("./sprites/background/first/foreground.png", "./sprites/background/first/background.png", NULL, sc->max_x, sc->max_y);
-	BACKGROUND *bg_end = createBackground("./sprites/background/end/text.png", "./sprites/background/end/end.png", "./sprites/background/end/planet.png", sc->max_x, sc->max_y);
+	BACKGROUND *bg_end = createBackground("./sprites/background/end/text.png", "./sprites/background/end/end.png", NULL, sc->max_x, sc->max_y);
 
 	SPACESHIP *enemyCollision = NULL;
 	ENEMIES *enemies = createEnemyList(sc);
 	ITEM *items = NULL;
 
-	BOSS *firstBoss = addBoss(sc->max_x + 80 / 2, sc->max_y / 2, 80, 5, LINEAR, FIRST_BOSS, "./sprites/spaceships/enemy/boss-01/", sc);
+	BOSS *firstBoss = addBoss(sc->max_x + 80 / 2, sc->max_y / 2, 80, 80, LINEAR, FIRST_BOSS, "./sprites/spaceships/enemy/boss-01/", sc);
 	BOSS *lastBoss = addBoss(sc->max_x + 80 / 2, sc->max_y / 2, 80, 80, LINEAR, LAST_BOSS, "./sprites/spaceships/enemy/boss-02/", sc);
 
 	LEVEL *game = beginGame(sp, enemies, sc, items, bg);
@@ -63,7 +63,6 @@ int main(void)
 	// timers para as falas do jogo
 	int timerFirstLevel = 30 * 10;
 	int timerFirstBoss = 30 * 10;
-	int timerLastLevel = 30 * 10;
 	int timerLastBoss = 30 * 10;
 
 	// portraits dos personagens
@@ -112,13 +111,13 @@ int main(void)
 				{
 					playerText(sc, game->currentLevel, font, &timerFirstLevel, portrait_3);
 				}
-    
+
 				if (game->currentLevel == FIRST_BOSS){
 					bossText(sc, game->currentLevel, font, &timerFirstBoss, portrait_2);
 				}
 
 				if (game->currentLevel == LAST_BOSS){
-					bossText(sc, game->currentLevel, font, &timerLastBoss, portrait_2);
+					bossText(sc, game->currentLevel, font, &timerLastBoss, portrait_4);
 				}	
 
 				if (game->currentLevel == FIRST_BOSS && countEnemies(game->enemies) == 0)
@@ -138,6 +137,12 @@ int main(void)
 			else if (game->currentLevel == END_FIRST_BOSS)
 			{
 				showText(game, timer, font, &textY, LAST, "Cada transmissão é uma ameaça. \nCada nave, um inimigo em potencial.\nVocê precisa agir. \nPrecisa acabar com todos eles antes que eles acabem com você.");
+			}
+			else if (game->currentLevel == END_LAST_BOSS){
+				showText(game, timer, font, &textY, END, "No fim, o vazio te engoliu...");
+			}
+			else if (game->currentLevel == END){
+				break;
 			}
 			else
 			{

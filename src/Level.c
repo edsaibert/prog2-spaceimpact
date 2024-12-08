@@ -18,13 +18,12 @@ LEVEL* beginGame(SPACESHIP* sp, ENEMIES* enemies, SCREEN* sc, ITEM* items, BACKG
 
 void showText(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, int* y, LEVEL_ID nextLevel, const char* text){
 	if (game->animation == 0){	
-		if (game->currentLevel == FIRST_BOSS){
-			changeBackground(game->bg, "./sprites/background/last/foreground.png", "./sprites/background/last/background.png", "./sprites/background/last/middleground.png");
-		}
+
         game->currentLevel = nextLevel;
 		game->animation = 30 * 10;
 		*y = game->sc->max_y + 10;
 
+		return;
 	}
 
     char* buffer = strdup(text);
@@ -37,7 +36,7 @@ void showText(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, int* y, LEV
         newY += line_height + 5;
         line = strtok(NULL, "\n");
     }
-    if (*y <= (game->sc->max_y - 140)/2) {
+    if (*y <= (game->sc->max_y - 150)/2) {
 		game->animation--;
 	}
 	else (*y)--;
@@ -51,13 +50,13 @@ int loadLevel(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* 
    
 	if (game->currentLevel == FIRST || game->currentLevel == LAST){
 		addEnemy(&(game->enemies), game->sc, timer, game->currentLevel);
-		updateSpaceshipPosition(game->sp, enemyCollision, game->sc, moveSpaceship, compareFunctionPlayer);	
 	}
 	addItem(&(game->items), game->sc, timer);
 
 	// Verifica colisão com inimigos e atualiza a posição dos inimigos
 	enemyCollision = checkCollisionFromEnemies(game->enemies, game->sp->x, game->sp->y, game->sp->side);
 	checkCollisionFromItem(&(game->items), game->sp);
+	updateSpaceshipPosition(game->sp, enemyCollision, game->sc, moveSpaceship, compareFunctionPlayer);
 
 	enemiesShoot(game->enemies, game->sc);
 	shootSpaceship(game->sp);
@@ -94,11 +93,11 @@ int loadLevel(LEVEL* game, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* 
 }
 
 void loadBoss(LEVEL* game, BOSS** boss, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font, SPACESHIP* enemyCollision, int *thunder){
-	// if (checkCollision(game->sp->x, game->sp->y, (*boss)->sp->x, (*boss)->sp->y, game->sp->side, (*boss)->sp->side)){
-	// 	enemyCollision = (*boss)->sp;
-	// 	game->sp->health -= 1;
-	// }
-	updateSpaceshipPosition(game->sp, enemyCollision, game->sc, moveSpaceship, compareFunctionPlayer);	
+	if (checkCollision(game->sp->x, game->sp->y, (*boss)->sp->x, (*boss)->sp->y, game->sp->side, (*boss)->sp->side)){
+		enemyCollision = (*boss)->sp;
+	}
+
+	// updateSpaceshipPosition(game->sp, enemyCollision, game->sc, moveSpaceship, compareFunctionPlayer);	
 	updateScreenForBoss(boss, timer,game->sp, game->sc);	
 
 	hitPlayerBoss(boss, game->sp, game->sc);
@@ -111,7 +110,10 @@ void loadBoss(LEVEL* game, BOSS** boss, ALLEGRO_TIMER* timer, ALLEGRO_FONT* font
 	drawSpaceship((*boss)->sp);
 
 	if (checkIfSpaceshipIsDead((*boss)->sp)){
-		if (game->currentLevel == FIRST_BOSS) game->currentLevel = END_FIRST_BOSS;
+		if (game->currentLevel == FIRST_BOSS) {
+			game->currentLevel = END_FIRST_BOSS;
+			changeBackground(game->bg, "./sprites/background/last/foreground.png", "./sprites/background/last/background.png", "./sprites/background/last/middleground.png");
+		}
 		else if (game->currentLevel == LAST_BOSS) game->currentLevel = END_LAST_BOSS;
 		destroyBoss(*boss);
 	}
